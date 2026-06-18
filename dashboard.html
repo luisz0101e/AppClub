@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --club-gold: #C5A059; --bg-deep: #050505; --card-bg: #0e0e0e; --text-muted: #888; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Urbanist', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Urbanist', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-deep); color: white; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
         /* HEADER */
@@ -18,21 +18,17 @@
 
         /* CONTENEDOR PRINCIPAL */
         .main-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 100px; }
-        
-        /* Limitar ancho en PC para que no se vea estirado */
         .content-wrapper { max-width: 1000px; margin: 0 auto; }
 
         .section-title { font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: var(--club-gold); border-bottom: 1px solid #1a1a1a; padding-bottom: 10px; margin-top: 30px; }
         .section-title:first-child { margin-top: 0; }
 
-        /* ==================== CARNET SOCIO PRO ==================== */
+        /* CARNET SOCIO */
         .socio-card {
             background: linear-gradient(135deg, #111 0%, #050505 100%);
-            border: 1px solid #222;
-            border-left: 4px solid var(--club-gold);
+            border: 1px solid #222; border-left: 4px solid var(--club-gold);
             border-radius: 8px; padding: 25px; margin-bottom: 30px;
-            position: relative; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .socio-card::after {
             content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px;
@@ -40,9 +36,9 @@
         }
         .s-type { color: var(--club-gold); font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
         .s-num { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; letter-spacing: 2px; }
-        .s-status { display: inline-block; background: rgba(42, 128, 58, 0.2); color: #4caf50; font-size: 0.75rem; padding: 5px 12px; border-radius: 4px; font-weight: 900; border: 1px solid #4caf50; text-transform: uppercase; letter-spacing: 1px; }
+        .s-status { display: inline-block; background: rgba(42, 128, 58, 0.2); color: #4caf50; font-size: 0.75rem; padding: 5px 12px; border-radius: 4px; font-weight: 900; border: 1px solid #4caf50; text-transform: uppercase; }
 
-        /* ==================== MATCH CARD PRO ==================== */
+        /* MATCH CARD */
         .match-card { background: var(--card-bg); border-radius: 12px; padding: 25px; border: 1px solid #1a1a1a; margin-bottom: 30px; text-align: center; }
         .teams { display: flex; justify-content: space-around; align-items: center; margin: 20px 0; }
         .team { display: flex; flex-direction: column; align-items: center; gap: 10px; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; }
@@ -51,17 +47,16 @@
         .vs { color: var(--club-gold); font-size: 1.8rem; font-weight: 900; }
         .match-info { background: #000; padding: 12px; border-radius: 6px; color: var(--club-gold); font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; border: 1px solid #111; }
 
-        /* ==================== NOTICIAS PRO ==================== */
+        /* NOTICIAS */
         .news-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; }
         .news-scroll::-webkit-scrollbar { display: none; }
-        .news-card { min-width: 260px; max-width: 300px; background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid #1a1a1a; transition: transform 0.3s, border-color 0.3s; cursor: pointer; }
-        .news-card:hover { transform: translateY(-5px); border-color: var(--club-gold); }
+        .news-card { min-width: 260px; max-width: 300px; background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid #1a1a1a; transition: 0.3s; }
         .news-img { height: 140px; background: #222 center/cover; }
         .news-content { padding: 15px; }
         .news-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; line-height: 1.4; color: white; }
         .news-date { font-size: 0.7rem; color: var(--club-gold); font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* ==================== CANCHA 3D PRO ==================== */
+        /* CANCHA 3D Y PLANTILLA */
         .plantilla-container { display: flex; gap: 20px; height: 500px; }
         .pitch-3d {
             flex: 1.5; background: #0f2e0f; border-radius: 8px; position: relative; border: 2px solid rgba(255,255,255,0.1);
@@ -80,7 +75,6 @@
         }
         .p-name { background: rgba(0,0,0,0.85); font-size: 9px; padding: 3px 6px; margin-top: 5px; border-radius: 4px; font-weight: 700; white-space: nowrap; border: 1px solid #333; }
 
-        /* ==================== LISTA JUGADORES ==================== */
         .player-list { flex: 1; overflow-y: auto; padding-right: 10px; }
         .player-list::-webkit-scrollbar { width: 6px; }
         .player-list::-webkit-scrollbar-thumb { background: var(--club-gold); border-radius: 10px;}
@@ -89,12 +83,11 @@
             background: var(--card-bg); border: 1px solid #1a1a1a; padding: 15px; border-radius: 8px;
             display: flex; align-items: center; gap: 15px; margin-bottom: 10px; transition: 0.2s;
         }
-        .p-item:hover { border-color: var(--club-gold); background: #151515; }
         .p-number { color: var(--club-gold); font-weight: 900; font-size: 1.4rem; width: 30px; text-align: center; }
         .p-data h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
         .p-data p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
 
-        /* NAV */
+        /* NAV INFERIOR PARA CELULARES */
         .bottom-nav {
             position: fixed; bottom: 0; width: 100%; background: var(--bg-deep); display: flex;
             justify-content: space-around; padding: 15px 0 25px; border-top: 1px solid #1a1a1a; z-index: 100;
@@ -102,10 +95,14 @@
         .nav-btn { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; transition: 0.3s; }
         .nav-btn.active { color: var(--club-gold); transform: translateY(-2px); }
 
+        /* AJUSTES PERFECTOS PARA CELULAR */
         @media (max-width: 768px) {
             .plantilla-container { flex-direction: column; height: auto; }
-            .pitch-3d { height: 350px; }
-            .player-list { height: 400px; }
+            .pitch-3d { min-height: 380px; width: 100%; margin-bottom: 15px; }
+            .player-list { min-height: 300px; max-height: 500px; width: 100%; overflow-y: auto; }
+            .team-logo { width: 50px; height: 50px; }
+            .team-logo img { width: 30px; height: 30px; }
+            .vs { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -186,36 +183,35 @@
     </main>
 
     <nav class="bottom-nav">
-        <div class="nav-btn active" onclick="showTab('hoy')">
+        <div class="nav-btn active" onclick="showTab('hoy', this)">
             <span style="font-size: 1.2rem;">🏠</span>HOY
         </div>
-        <div class="nav-btn" onclick="showTab('plantilla')">
+        <div class="nav-btn" onclick="showTab('plantilla', this)">
             <span style="font-size: 1.2rem;">👥</span>PLANTILLA
         </div>
         <a href="index.html" class="nav-btn">
             <span style="font-size: 1.2rem;">🚪</span>SALIR
-        </div>
+        </a>
     </nav>
 
     <script>
-        // Nombre del usuario logueado
         document.getElementById('userName').textContent = localStorage.getItem('usuarioLegion') || 'Socio';
 
-        // Lógica de Pestañas
-        function showTab(tab) {
+        // Lógica de Pestañas corregida para pantallas táctiles (Mobile First)
+        function showTab(tab, element) {
             document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
             document.getElementById('tab-' + tab).style.display = 'block';
-            event.currentTarget.classList.add('active');
+            element.classList.add('active');
         }
 
-        // Cargar partido desde el Admin
+        // Cargar partido
         const data = JSON.parse(localStorage.getItem('proxPartidoLegion'));
         if(data) {
             document.getElementById('rivalName').textContent = data.rival;
             document.getElementById('torneoText').textContent = data.torneo;
             
-            // Formato de fecha bonito
             if(data.fecha) {
                 const parts = data.fecha.split('-');
                 const f = new Date(parts[0], parts[1]-1, parts[2]);
@@ -228,7 +224,7 @@
             }
         }
 
-        // Generar Lista de Jugadores (Demo de 24)
+        // Generar Lista de Jugadores
         const jugadores = [
             {n:1, name:"LITUMA LUIS", p:"Portero"}, {n:2, name:"GUARTAZACA MICHAEL", p:"Lat. Izquierdo"},
             {n:3, name:"GALLO BRANDON", p:"Ext. Derecho"}, {n:4, name:"PESANTEZ ANGEL", p:"Lat. Derecho"},
