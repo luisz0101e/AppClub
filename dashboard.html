@@ -187,11 +187,11 @@
             display: flex;
             gap: 20px;
             align-items: stretch;
-            height: 500px; /* Altura fija para que la lista tenga scroll */
+            height: 500px; 
         }
 
         .pitch-wrapper {
-            flex: 1; /* Mitad izquierda */
+            flex: 1; 
             position: relative;
             background: #2A803A;
             background-image: repeating-linear-gradient(0deg, transparent, transparent 10%, rgba(0,0,0,0.05) 10%, rgba(0,0,0,0.05) 20%);
@@ -231,8 +231,8 @@
 
         /* Contenedor de la lista a la derecha */
         .player-list-wrapper {
-            flex: 1; /* Mitad derecha */
-            overflow-y: auto; /* Scroll interno */
+            flex: 1; 
+            overflow-y: auto; 
             padding-right: 5px;
             height: 100%;
         }
@@ -435,11 +435,14 @@
     </nav>
 
     <script>
+        // Cargar nombre del usuario desde localStorage
         const usuarioGuardado = localStorage.getItem('usuarioLegion') || 'Socio';
         document.getElementById('userNameDisplay').textContent = usuarioGuardado;
 
+        // Leer el partido actualizado por el administrador (desde localStorage)
         const partidoActivo = JSON.parse(localStorage.getItem('proxPartidoLegion'));
         if(partidoActivo) {
+            // Reemplazar la fecha
             const fechaParts = partidoActivo.fecha.split('-');
             if(fechaParts.length === 3) {
                 const fechaObj = new Date(fechaParts[0], fechaParts[1]-1, fechaParts[2]);
@@ -448,10 +451,20 @@
                 document.querySelector('.match-footer').textContent = `📅 ${finalFecha}, ${partidoActivo.hora} hrs | 🏟️ ${partidoActivo.estadio}`;
             }
             
+            // Inyectar datos en el HTML
             document.querySelector('.match-header').textContent = partidoActivo.torneo;
             document.querySelectorAll('.team-name')[1].textContent = partidoActivo.rival;
+
+            // INYECTAR EL ESCUDO DEL RIVAL SUBIDO POR EL ADMIN
+            const cajaLogoRival = document.querySelectorAll('.team-logo')[1];
+            if (partidoActivo.logoRival) {
+                cajaLogoRival.innerHTML = `<img src="${partidoActivo.logoRival}" alt="Escudo Rival" style="width: 40px; height: 40px; object-fit: contain;">`;
+            } else {
+                cajaLogoRival.innerHTML = '🛡️'; 
+            }
         }
 
+        // Función para cambiar de pestañas
         function switchTab(tabId, element) {
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
