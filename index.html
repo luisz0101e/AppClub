@@ -61,7 +61,7 @@
             color: #ffffff;
             font-weight: 800; 
             text-transform: uppercase; 
-            letter-spacing: 2.5px; /* Más espaciado para que se vea premium */
+            letter-spacing: 2.5px; 
         }
 
         p {
@@ -176,9 +176,12 @@
             btn.style.opacity = "0.7";
 
             setTimeout(() => {
-                alert("¡Bienvenido al sistema de Legión Técnica, " + user.split('@')[0] + "!");
-                btn.innerHTML = "Iniciar Sesión";
-                btn.style.opacity = "1";
+                // Guardamos el nombre del usuario temporalmente en el navegador
+                const nombreCorto = user.split('@')[0];
+                localStorage.setItem('usuarioLegion', nombreCorto);
+                
+                // Redirigir al Dashboard principal
+                window.location.href = 'dashboard.html';
             }, 1000);
         });
     </script>
