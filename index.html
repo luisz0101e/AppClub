@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal del Club Legión - Login</title>
+    <title>Legión Técnica - Login</title>
     <style>
         :root {
-            /* Tono Dorado Sofisticado y menos saturado */
+            /* Tono Dorado Sofisticado */
             --club-gold: #C5A059; 
             /* Fondo oscuro profundo */
             --bg-deep: #0A0A0A; 
@@ -41,36 +41,34 @@
             width: 100%;
             max-width: 420px;
             text-align: center;
-            /* sombra suave para profundidad, sin borde superior */
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); 
-            border: 1px solid #333; /* Borde muy sutil para delimitar la tarjeta */
+            border: 1px solid #333; 
         }
 
-        /* AJUSTES AL LOGO (Más grande, transparente, sin círculo) */
         .logo {
-            width: 160px; /* Incrementado el tamaño considerablemente */
-            height: auto; /* Mantener proporción */
+            width: 160px; 
+            height: auto; 
             object-fit: contain;
             margin-bottom: 25px;
-            /* Eliminados: border-radius, background, padding, box-shadow */
-            display: block; /* Centrado */
+            display: block; 
             margin-left: auto;
             margin-right: auto;
         }
 
         h2 {
             margin-bottom: 5px;
-            font-size: 1.7rem;
+            font-size: 1.8rem;
             color: #ffffff;
-            font-weight: 800; /* Más peso visual */
-            text-transform: uppercase; /* Estilo deportivo/club */
-            letter-spacing: 1px;
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 2.5px; /* Más espaciado para que se vea premium */
         }
 
         p {
             color: #888888;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 35px;
+            letter-spacing: 0.5px;
         }
 
         .input-group {
@@ -92,7 +90,7 @@
             width: 100%;
             padding: 14px 15px;
             background: var(--input-bg);
-            border: 1px solid #3d3d3d; /* Borde sutil por defecto */
+            border: 1px solid #3d3d3d; 
             border-radius: 6px;
             color: white;
             font-size: 1rem;
@@ -100,13 +98,11 @@
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Foco con tono dorado */
         .input-group input:focus {
             border-color: var(--club-gold);
             box-shadow: 0 0 8px rgba(197, 160, 89, 0.3);
         }
 
-        /* BOTÓN CON TONO DORADO SOFISTICADO */
         .btn-login {
             width: 100%;
             padding: 14px;
@@ -124,7 +120,6 @@
         }
 
         .btn-login:hover {
-            /* Tono dorado un poco más rico al pasar el mouse */
             background: #D4AF37; 
         }
 
@@ -132,7 +127,6 @@
             transform: scale(0.98);
         }
 
-        /* LINK DORADO */
         .forgot-password {
             display: block;
             margin-top: 25px;
@@ -143,17 +137,17 @@
         }
 
         .forgot-password:hover {
-            color: #ffffff; /* Cambia a blanco sutil al hover */
+            color: #ffffff; 
         }
     </style>
 </head>
 <body>
 
     <div class="login-container">
-        <img src="./escudolegion.png" alt="Escudo de la Legión" class="logo">
+        <img src="./escudolegion.png" alt="Escudo de la Legión Técnica" class="logo">
         
-        <h2>Portal del Club</h2>
-        <p>Ingresa tus credenciales para continuar</p>
+        <h2>LEGIÓN TÉCNICA</h2>
+        <p>Sistema de Gestión Deportiva</p>
 
         <form id="loginForm">
             <div class="input-group">
@@ -173,18 +167,16 @@
     </div>
 
     <script>
-        // Lógica básica temporal
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
             const user = document.getElementById('username').value;
-            console.log("Intentando ingresar con:", user);
             
             const btn = document.querySelector('.btn-login');
             btn.innerHTML = "Verificando...";
             btn.style.opacity = "0.7";
 
             setTimeout(() => {
-                alert("¡Bienvenido, Profe " + user.split('@')[0] + "!\n\n(Diseñaremos el panel principal a continuación)");
+                alert("¡Bienvenido al sistema de Legión Técnica, " + user.split('@')[0] + "!");
                 btn.innerHTML = "Iniciar Sesión";
                 btn.style.opacity = "1";
             }, 1000);
