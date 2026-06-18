@@ -2,18 +2,17 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legión Técnica - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Legión Técnica - App Oficial</title>
     <style>
         :root {
-            /* Tono Dorado Sofisticado */
             --club-gold: #C5A059; 
-            /* Fondo oscuro profundo */
+            --club-gold-dark: #A68042;
             --bg-deep: #0A0A0A; 
-            /* Fondo de tarjeta sutil */
             --card-bg: #1A1A1A; 
-            /* Fondo de inputs */
-            --input-bg: #262626; 
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --nav-bg: #121212;
         }
 
         * {
@@ -21,169 +20,394 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-deep);
-            background-image: radial-gradient(circle at top, #222222 0%, var(--bg-deep) 70%);
-            color: #ffffff;
+            color: var(--text-main);
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             height: 100vh;
             overflow: hidden;
         }
 
-        .login-container {
+        /* HEADER SUPERIOR */
+        .top-bar {
             background: var(--card-bg);
-            padding: 50px 35px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 420px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); 
-            border: 1px solid #333; 
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            z-index: 10;
         }
 
-        .logo {
-            width: 160px; 
-            height: auto; 
+        .top-bar-logo {
+            height: 35px;
             object-fit: contain;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--club-gold);
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            background: #333;
+            border: 2px solid var(--club-gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        /* CONTENIDO PRINCIPAL (SCROLL) */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 90px; /* Espacio para la barra inferior */
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--club-gold);
+            padding-left: 10px;
+        }
+
+        /* CARNET DE SOCIO VIRTUAL */
+        .socio-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 1px solid var(--club-gold);
+            border-radius: 15px;
+            padding: 20px;
             margin-bottom: 25px;
-            display: block; 
-            margin-left: auto;
-            margin-right: auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
         }
 
-        h2 {
-            margin-bottom: 5px;
-            font-size: 1.8rem;
-            color: #ffffff;
-            font-weight: 800; 
-            text-transform: uppercase; 
-            letter-spacing: 2.5px; 
+        .socio-card::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
         }
 
-        p {
-            color: #888888;
-            font-size: 0.95rem;
-            margin-bottom: 35px;
-            letter-spacing: 0.5px;
-        }
-
-        .input-group {
-            margin-bottom: 22px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
+        .socio-type {
+            color: var(--club-gold);
             font-size: 0.8rem;
-            margin-bottom: 8px;
-            color: #aaaaaa;
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .socio-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .socio-status {
+            display: inline-block;
+            background: #2A803A;
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        /* PRÓXIMO PARTIDO */
+        .match-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            border: 1px solid #333;
+        }
+
+        .match-header {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 15px;
             letter-spacing: 1px;
         }
 
-        .input-group input {
-            width: 100%;
-            padding: 14px 15px;
-            background: var(--input-bg);
-            border: 1px solid #3d3d3d; 
-            border-radius: 6px;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        .teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
-        .input-group input:focus {
-            border-color: var(--club-gold);
-            box-shadow: 0 0 8px rgba(197, 160, 89, 0.3);
+        .team {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
-        .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: var(--club-gold);
-            color: #121212;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.1s ease;
-            margin-top: 10px;
+        .team-logo {
+            width: 60px;
+            height: 60px;
+            background: #222;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
         }
 
-        .btn-login:hover {
-            background: #D4AF37; 
+        .team-logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
         }
 
-        .btn-login:active {
-            transform: scale(0.98);
+        .team-name {
+            font-weight: bold;
+            font-size: 0.9rem;
         }
 
-        .forgot-password {
-            display: block;
-            margin-top: 25px;
+        .vs {
+            font-size: 1.2rem;
+            font-weight: 900;
             color: var(--club-gold);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
+            padding: 0 15px;
         }
 
-        .forgot-password:hover {
-            color: #ffffff; 
+        .match-footer {
+            background: #111;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: var(--club-gold);
         }
+
+        /* NOTICIAS RÁPIDAS */
+        .news-scroll {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: none; /* Ocultar scrollbar en Firefox */
+        }
+        .news-scroll::-webkit-scrollbar { display: none; } /* Ocultar scrollbar en Chrome/Safari */
+
+        .news-card {
+            min-width: 200px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .news-img {
+            height: 100px;
+            background: #333 url('https://images.unsplash.com/photo-1518605368461-1ee7c688e404?auto=format&fit=crop&q=80&w=400') center/cover;
+        }
+
+        .news-content {
+            padding: 12px;
+        }
+
+        .news-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .news-date {
+            font-size: 0.75rem;
+            color: var(--club-gold);
+        }
+
+        /* BARRA DE NAVEGACIÓN INFERIOR (TIPO APP) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0 15px 0;
+            border-top: 1px solid #333;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-icon {
+            font-size: 1.4rem;
+        }
+
+        .nav-item.active {
+            color: var(--club-gold);
+        }
+
+        .nav-item.active .nav-icon {
+            transform: scale(1.1);
+        }
+
+        /* PANTALLAS OCULTAS */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
     </style>
 </head>
 <body>
 
-    <div class="login-container">
-        <img src="./escudolegion.png" alt="Escudo de la Legión Técnica" class="logo">
-        
-        <h2>LEGIÓN TÉCNICA</h2>
-        <p>Sistema de Gestión Deportiva</p>
+    <header class="top-bar">
+        <img src="./escudolegion.png" alt="Legión" class="top-bar-logo">
+        <div class="user-profile">
+            <span class="user-name" id="userNameDisplay">Socio</span>
+            <div class="avatar">👤</div>
+        </div>
+    </header>
 
-        <form id="loginForm">
-            <div class="input-group">
-                <label for="username">Usuario o Correo</label>
-                <input type="text" id="username" placeholder="Tu usuario" required>
+    <main class="main-content">
+
+        <div id="tab-hoy" class="tab-content active">
+            
+            <div class="socio-card">
+                <div class="socio-type">Socio Fundador</div>
+                <div class="socio-number" id="socioNumber">#0142</div>
+                <div class="socio-status">AL DÍA</div>
             </div>
 
-            <div class="input-group">
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" placeholder="••••••••" required>
+            <h3 class="section-title">Próximo Partido</h3>
+            <div class="match-card">
+                <div class="match-header">Final - Campeonato Local</div>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo">
+                            <img src="./escudolegion.png" alt="Legión">
+                        </div>
+                        <div class="team-name">Legión Técnica</div>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo">🛡️</div>
+                        <div class="team-name">Atlético FC</div>
+                    </div>
+                </div>
+                <div class="match-footer">📅 Sábado 25, 15:00 hrs | 🏟️ Estadio Central</div>
             </div>
 
-            <button type="submit" class="btn-login">Iniciar Sesión</button>
-        </form>
+            <h3 class="section-title">Última Hora</h3>
+            <div class="news-scroll">
+                <div class="news-card">
+                    <div class="news-img"></div>
+                    <div class="news-content">
+                        <div class="news-title">Presentamos la nueva indumentaria 2026</div>
+                        <div class="news-date">Hace 2 horas</div>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&q=80&w=400');"></div>
+                    <div class="news-content">
+                        <div class="news-title">Resumen de la victoria en semifinales</div>
+                        <div class="news-date">Ayer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-    </div>
+        <div id="tab-noticias" class="tab-content">
+            <h3 class="section-title">Noticias del Club</h3>
+            <p style="color: #aaa; text-align: center; margin-top: 50px;">Aquí irá el feed completo de noticias...</p>
+        </div>
+
+        <div id="tab-calendario" class="tab-content">
+            <h3 class="section-title">Calendario Oficial</h3>
+            <p style="color: #aaa; text-align: center; margin-top: 50px;">Aquí irá el fixture de partidos...</p>
+        </div>
+
+        <div id="tab-tienda" class="tab-content">
+            <h3 class="section-title">Tienda Oficial</h3>
+            <p style="color: #aaa; text-align: center; margin-top: 50px;">Aquí irán las camisetas y merchandising...</p>
+        </div>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <a class="nav-item active" onclick="switchTab('hoy', this)">
+            <span class="nav-icon">🏠</span>
+            <span>Hoy</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('noticias', this)">
+            <span class="nav-icon">📰</span>
+            <span>Noticias</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('calendario', this)">
+            <span class="nav-icon">📅</span>
+            <span>Calendario</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('tienda', this)">
+            <span class="nav-icon">🛍️</span>
+            <span>Tienda</span>
+        </a>
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">⚙️</span>
+            <span>Salir</span>
+        </a>
+    </nav>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            const user = document.getElementById('username').value;
-            
-            const btn = document.querySelector('.btn-login');
-            btn.innerHTML = "Verificando...";
-            btn.style.opacity = "0.7";
+        // Cargar nombre del usuario
+        const usuarioGuardado = localStorage.getItem('usuarioLegion') || 'Socio';
+        document.getElementById('userNameDisplay').textContent = usuarioGuardado;
 
-            setTimeout(() => {
-                // Guardamos el nombre del usuario temporalmente en el navegador
-                const nombreCorto = user.split('@')[0];
-                localStorage.setItem('usuarioLegion', nombreCorto);
-                
-                // Redirigir al Dashboard principal
-                window.location.href = 'dashboard.html';
-            }, 1000);
-        });
+        // Función para cambiar de pestañas en la app
+        function switchTab(tabId, element) {
+            // Quitar clase active de todos los botones e iconos
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            // Ocultar todas las pantallas
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            
+            // Activar el botón presionado y mostrar su pantalla
+            element.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
     </script>
 </body>
 </html>
