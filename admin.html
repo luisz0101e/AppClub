@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Legión Técnica</title>
+    <style>
+        :root {
+            --club-gold: #C5A059; 
+            --bg-deep: #0A0A0A; 
+            --card-bg: #1A1A1A; 
+            --input-bg: #262626;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body { background-color: var(--bg-deep); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
+
+        /* SIDEBAR DE ADMINISTRADOR */
+        .sidebar { width: 260px; background: var(--card-bg); border-right: 1px solid #333; display: flex; flex-direction: column; padding: 20px 0; }
+        .sidebar-header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #333; margin-bottom: 20px; }
+        .sidebar-logo { width: 70px; margin-bottom: 10px; }
+        .sidebar-title { font-size: 1rem; color: var(--club-gold); font-weight: bold; letter-spacing: 2px; }
+        .badge { background: #8C1919; color: white; font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; margin-top: 5px; display: inline-block;}
+        
+        .nav-item { padding: 15px 20px; color: var(--text-muted); text-decoration: none; display: block; border-left: 4px solid transparent; transition: 0.3s; }
+        .nav-item:hover, .nav-item.active { background: #222; border-left-color: var(--club-gold); color: white; }
+
+        /* ÁREA DE TRABAJO */
+        .main-area { flex: 1; padding: 40px; overflow-y: auto; background: #121212; }
+        h1 { margin-bottom: 30px; font-size: 2rem; border-bottom: 2px solid #333; padding-bottom: 10px; }
+
+        /* FORMULARIOS ESTILO CMS */
+        .admin-card { background: var(--card-bg); padding: 25px; border-radius: 10px; border: 1px solid #333; margin-bottom: 30px; max-width: 800px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .admin-card h3 { color: var(--club-gold); margin-bottom: 20px; font-size: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group.full { grid-column: 1 / -1; }
+        
+        label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 12px; background: var(--input-bg); border: 1px solid #444; color: white; border-radius: 6px; outline: none; }
+        input:focus, textarea:focus { border-color: var(--club-gold); }
+        
+        .btn-save { background: var(--club-gold); color: black; border: none; padding: 12px 25px; font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.2s; }
+        .btn-save:hover { background: #D4AF37; }
+
+        /* NOTIFICACIÓN DE ÉXITO */
+        #toast { position: fixed; top: 20px; right: -300px; background: #2A803A; color: white; padding: 15px 25px; border-radius: 8px; font-weight: bold; transition: right 0.4s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.4); z-index: 1000; }
+        #toast.show { right: 20px; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="./escudolegion.png" alt="Legión" class="sidebar-logo">
+            <div class="sidebar-title">LEGIÓN TÉCNICA</div>
+            <div class="badge">MODO ADMINISTRADOR</div>
+        </div>
+        <nav>
+            <a href="#" class="nav-item active">📅 Actualizar Partido</a>
+            <a href="#" class="nav-item">📰 Publicar Noticia</a>
+            <a href="#" class="nav-item">👥 Gestionar Socios</a>
+            <a href="#" class="nav-item">🛍️ Subir Producto</a>
+            <a href="index.html" class="nav-item" style="margin-top: 50px; color: #ff6b6b;">🚪 Cerrar Sesión</a>
+        </nav>
+    </aside>
+
+    <main class="main-area">
+        <h1>Gestor de Contenidos</h1>
+
+        <div class="admin-card">
+            <h3>Actualizar Próximo Partido <span>⚙️</span></h3>
+            <form id="formPartido">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Rival</label>
+                        <input type="text" id="rival" placeholder="Ej. Atlético FC" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Torneo / Competición</label>
+                        <input type="text" id="torneo" placeholder="Ej. Final - Campeonato Local" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <input type="date" id="fecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Hora</label>
+                        <input type="time" id="hora" required>
+                    </div>
+                    <div class="form-group full">
+                        <label>Estadio / Lugar</label>
+                        <input type="text" id="estadio" placeholder="Ej. Estadio Central" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-save">💾 Guardar y Publicar en la App</button>
+            </form>
+        </div>
+
+        <div class="admin-card" style="opacity: 0.6; pointer-events: none;">
+            <h3>Publicar Nueva Noticia <span>🔒</span></h3>
+            <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px;">(Módulo en construcción para subir imágenes)</p>
+            <div class="form-group">
+                <label>Título de la Noticia</label>
+                <input type="text" placeholder="Ej. Nueva camiseta 2026">
+            </div>
+        </div>
+    </main>
+
+    <div id="toast">¡Datos actualizados con éxito en la App! ✅</div>
+
+    <script>
+        // Cargar datos actuales si existen
+        window.onload = function() {
+            const partidoGuardado = JSON.parse(localStorage.getItem('proxPartidoLegion'));
+            if(partidoGuardado) {
+                document.getElementById('rival').value = partidoGuardado.rival;
+                document.getElementById('torneo').value = partidoGuardado.torneo;
+                document.getElementById('fecha').value = partidoGuardado.fecha;
+                document.getElementById('hora').value = partidoGuardado.hora;
+                document.getElementById('estadio').value = partidoGuardado.estadio;
+            }
+        };
+
+        // Guardar nuevo partido en la memoria
+        document.getElementById('formPartido').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const partidoData = {
+                rival: document.getElementById('rival').value,
+                torneo: document.getElementById('torneo').value,
+                fecha: document.getElementById('fecha').value,
+                hora: document.getElementById('hora').value,
+                estadio: document.getElementById('estadio').value
+            };
+
+            // Guarda la información en la memoria local del navegador
+            localStorage.setItem('proxPartidoLegion', JSON.stringify(partidoData));
+
+            // Mostrar notificación de éxito
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        });
+    </script>
+</body>
+</html>
