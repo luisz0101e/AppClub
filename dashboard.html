@@ -3,475 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Legión Técnica - App Oficial</title>
+    <title>Legión App - Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --club-gold: #C5A059; 
-            --club-gold-dark: #A68042;
-            --bg-deep: #0A0A0A; 
-            --card-bg: #1A1A1A; 
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
-            --nav-bg: #121212;
-        }
+        :root { --club-gold: #C5A059; --bg-deep: #050505; --card-bg: #0e0e0e; --text-muted: #888; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Urbanist', sans-serif; }
+        body { background-color: var(--bg-deep); color: white; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+        /* HEADER */
+        .top-bar { background: var(--card-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; }
+        .top-bar img { height: 35px; }
+        .user-info { display: flex; align-items: center; gap: 10px; color: var(--club-gold); font-weight: 900; text-transform: uppercase; font-size: 0.8rem; }
+        .avatar { width: 32px; height: 32px; border: 1px solid var(--club-gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; }
 
-        body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
+        .main-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 100px; }
+        .section-title { font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: var(--club-gold); border-bottom: 1px solid #1a1a1a; padding-bottom: 10px; }
 
-        /* HEADER SUPERIOR */
-        .top-bar {
-            background: var(--card-bg);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #333;
-            z-index: 10;
-        }
-
-        .top-bar-logo {
-            height: 35px;
-            object-fit: contain;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-name {
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: var(--club-gold);
-        }
-
-        .avatar {
-            width: 35px;
-            height: 35px;
-            background: #333;
-            border: 2px solid var(--club-gold);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-        }
-
-        /* CONTENIDO PRINCIPAL (SCROLL) */
-        .main-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            padding-bottom: 90px;
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--club-gold);
-            padding-left: 10px;
-        }
-
-        /* CARNET DE SOCIO VIRTUAL */
-        .socio-card {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            border: 1px solid var(--club-gold);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-        }
-
-        .socio-card::after {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(197, 160, 89, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .socio-type {
-            color: var(--club-gold);
-            font-size: 0.8rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        .socio-number {
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 5px;
-        }
-
-        .socio-status {
-            display: inline-block;
-            background: #2A803A;
-            color: white;
-            font-size: 0.7rem;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
-        /* PRÓXIMO PARTIDO */
-        .match-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 25px;
-            border: 1px solid #333;
-        }
-
-        .match-header {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
-        .teams {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .team { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .team-logo { width: 60px; height: 60px; background: #222; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; }
+        /* MATCH CARD */
+        .match-card { background: var(--card-bg); border-radius: 12px; padding: 25px; border: 1px solid #1a1a1a; margin-bottom: 30px; text-align: center; }
+        .teams { display: flex; justify-content: space-around; align-items: center; margin: 20px 0; }
+        .team { display: flex; flex-direction: column; align-items: center; gap: 10px; font-weight: 900; font-size: 0.8rem; }
+        .team-logo { width: 60px; height: 60px; background: #151515; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 1px solid #222; }
         .team-logo img { width: 40px; height: 40px; object-fit: contain; }
-        .team-name { font-weight: bold; font-size: 0.9rem; }
-        .vs { font-size: 1.2rem; font-weight: 900; color: var(--club-gold); padding: 0 15px; }
-        .match-footer { background: #111; padding: 10px; border-radius: 8px; font-weight: bold; color: var(--club-gold); font-size: 0.85rem; }
+        .vs { color: var(--club-gold); font-size: 1.5rem; font-weight: 900; }
+        .match-info { background: #000; padding: 10px; border-radius: 4px; color: var(--club-gold); font-size: 0.75rem; font-weight: 700; }
 
-        /* NOTICIAS RÁPIDAS */
-        .news-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .news-scroll::-webkit-scrollbar { display: none; }
-        .news-card { min-width: 200px; background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; }
-        .news-img { height: 100px; background: #333 url('https://images.unsplash.com/photo-1518605368461-1ee7c688e404?auto=format&fit=crop&q=80&w=400') center/cover; }
-        .news-content { padding: 12px; }
-        .news-title { font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; line-height: 1.3; }
-        .news-date { font-size: 0.75rem; color: var(--club-gold); }
-
-        /* -------------------------------------
-           ESTILOS PARA LA PESTAÑA "PLANTILLA"
-           LADO A LADO
-           ------------------------------------- */
-        .plantilla-layout {
-            display: flex;
-            gap: 20px;
-            align-items: stretch;
-            height: 500px; 
+        /* CANCHA 3D PRO */
+        .plantilla-container { display: flex; gap: 20px; height: 500px; }
+        .pitch-3d {
+            flex: 1.5; background: #0f2e0f; border-radius: 8px; position: relative; border: 2px solid rgba(255,255,255,0.1);
+            perspective: 800px; overflow: hidden;
         }
-
-        .pitch-wrapper {
-            flex: 1; 
-            position: relative;
-            background: #2A803A;
-            background-image: repeating-linear-gradient(0deg, transparent, transparent 10%, rgba(0,0,0,0.05) 10%, rgba(0,0,0,0.05) 20%);
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-            height: 100%;
+        .pitch-lines {
+            width: 100%; height: 100%; position: absolute; border: 2px solid rgba(255,255,255,0.3);
+            transform: rotateX(20deg); transform-origin: bottom;
+            background-image: repeating-linear-gradient(0deg, #1a3a1a, #1a3a1a 10%, #163316 10%, #163316 20%);
         }
-        
-        .line-center { position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(255, 255, 255, 0.7); }
-        .circle-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; border: 2px solid rgba(255, 255, 255, 0.7); border-radius: 50%; }
-        .area-top { position: absolute; top: 0; left: 20%; width: 60%; height: 15%; border: 2px solid rgba(255, 255, 255, 0.7); border-top: none; }
-        .area-bottom { position: absolute; bottom: 0; left: 20%; width: 60%; height: 15%; border: 2px solid rgba(255, 255, 255, 0.7); border-bottom: none; }
-
-        .shirt-mini {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 50px;
+        .player-pin {
+            position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center;
         }
-
-        .shirt-mini-icon {
-            width: 28px; height: 28px;
-            background: white; color: black;
-            border-radius: 6px 6px 3px 3px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold; font-size: 11px;
-            border: 1px solid #ccc;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        .shirt {
+            width: 26px; height: 26px; background: white; color: black; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900;
+            border: 2px solid var(--club-gold); box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
+        .p-name { background: rgba(0,0,0,0.8); font-size: 8px; padding: 2px 5px; margin-top: 4px; border-radius: 3px; font-weight: 700; white-space: nowrap; }
 
-        .gk .shirt-mini-icon { background: var(--club-gold); border-color: var(--club-gold-dark); }
-        .shirt-mini-name { background: rgba(0,0,0,0.8); color: white; font-size: 9px; padding: 2px 5px; border-radius: 4px; margin-top: 3px; text-align: center; }
-
-        /* Contenedor de la lista a la derecha */
-        .player-list-wrapper {
-            flex: 1; 
-            overflow-y: auto; 
-            padding-right: 5px;
-            height: 100%;
+        /* LISTA JUGADORES */
+        .player-list { flex: 1; overflow-y: auto; padding-right: 10px; }
+        .player-list::-webkit-scrollbar { width: 4px; }
+        .player-list::-webkit-scrollbar-thumb { background: var(--club-gold); }
+        .p-item {
+            background: #0a0a0a; border: 1px solid #1a1a1a; padding: 12px; border-radius: 6px;
+            display: flex; align-items: center; gap: 15px; margin-bottom: 8px;
         }
+        .p-number { color: var(--club-gold); font-weight: 900; font-size: 1.2rem; }
+        .p-data h4 { font-size: 0.9rem; font-weight: 700; }
+        .p-data p { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
 
-        /* Diseño del scrollbar de la lista */
-        .player-list-wrapper::-webkit-scrollbar { width: 6px; }
-        .player-list-wrapper::-webkit-scrollbar-thumb { background: var(--club-gold); border-radius: 10px; }
-        .player-list-wrapper::-webkit-scrollbar-track { background: #111; border-radius: 10px; }
-
-        .player-list-item {
-            background: var(--card-bg);
-            border: 1px solid #333;
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .player-list-number { font-weight: 900; color: var(--club-gold); font-size: 1.4rem; width: 30px; text-align: center; }
-        .player-list-info { flex: 1; }
-        .player-list-name { font-weight: bold; font-size: 0.95rem; color: #fff; }
-        .player-list-pos { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
-
-        /* Adaptación para celulares */
-        @media (max-width: 768px) {
-            .plantilla-layout {
-                flex-direction: column;
-                height: auto;
-            }
-            .pitch-wrapper { height: 350px; margin-bottom: 20px; }
-            .player-list-wrapper { height: auto; overflow-y: visible; }
-        }
-
-        /* BARRA DE NAVEGACIÓN INFERIOR (TIPO APP) */
+        /* NAV */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: var(--nav-bg);
-            display: flex; justify-content: space-around; align-items: center;
-            padding: 10px 0 15px 0; border-top: 1px solid #333; box-shadow: 0 -5px 15px rgba(0,0,0,0.5); z-index: 100;
+            position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex;
+            justify-content: space-around; padding: 15px 0 25px; border-top: 1px solid #1a1a1a;
         }
+        .nav-btn { color: var(--text-muted); text-decoration: none; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer;}
+        .nav-btn.active { color: var(--club-gold); }
 
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--text-muted); text-decoration: none; font-size: 0.75rem; font-weight: 600; transition: color 0.3s ease; cursor: pointer; }
-        .nav-icon { font-size: 1.4rem; }
-        .nav-item.active { color: var(--club-gold); }
-        .nav-item.active .nav-icon { transform: scale(1.1); }
-
-        /* PANTALLAS OCULTAS */
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
+        @media (max-width: 768px) {
+            .plantilla-container { flex-direction: column; height: auto; }
+            .pitch-3d { height: 350px; }
+            .player-list { height: 400px; }
+        }
     </style>
 </head>
 <body>
-
     <header class="top-bar">
-        <img src="./escudolegion.png" alt="Legión" class="top-bar-logo">
-        <div class="user-profile">
-            <span class="user-name" id="userNameDisplay">Socio</span>
+        <img src="./escudolegion.png">
+        <div class="user-info">
+            <span id="userName">Socio</span>
             <div class="avatar">👤</div>
         </div>
     </header>
 
     <main class="main-content">
-
         <div id="tab-hoy" class="tab-content active">
-            
-            <div class="socio-card">
-                <div class="socio-type">Socio Activo</div>
-                <div class="socio-number" id="socioNumber">#0142</div>
-                <div class="socio-status">AL DÍA</div>
-            </div>
-
-            <h3 class="section-title">Próximo Partido</h3>
+            <h3 class="section-title">Próximo Encuentro</h3>
             <div class="match-card">
-                <div class="match-header">Final - Campeonato Local</div>
+                <p id="torneoText" style="font-size: 0.7rem; letter-spacing: 2px; color: var(--text-muted);">CAMPEONATO OFICIAL</p>
                 <div class="teams">
-                    <div class="team">
-                        <div class="team-logo"><img src="./escudolegion.png" alt="Legión"></div>
-                        <div class="team-name">Legión Técnica</div>
-                    </div>
+                    <div class="team"><div class="team-logo"><img src="./escudolegion.png"></div>LEGION</div>
                     <div class="vs">VS</div>
-                    <div class="team">
-                        <div class="team-logo">🛡️</div>
-                        <div class="team-name">Atlético FC</div>
-                    </div>
+                    <div class="team"><div class="team-logo" id="rivalLogo">🛡️</div><span id="rivalName">RIVAL</span></div>
                 </div>
-                <div class="match-footer">📅 Sábado 25, 15:00 hrs | 🏟️ Estadio Central</div>
-            </div>
-
-            <h3 class="section-title">Última Hora</h3>
-            <div class="news-scroll">
-                <div class="news-card">
-                    <div class="news-img"></div>
-                    <div class="news-content">
-                        <div class="news-title">Presentamos la nueva indumentaria 2026</div>
-                        <div class="news-date">Hace 2 horas</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&q=80&w=400');"></div>
-                    <div class="news-content">
-                        <div class="news-title">Resumen de la victoria en semifinales</div>
-                        <div class="news-date">Ayer</div>
-                    </div>
-                </div>
+                <div class="match-info" id="matchFooter">📅 POR DEFINIR</div>
             </div>
         </div>
 
-        <div id="tab-plantilla" class="tab-content">
-            <h3 class="section-title">Nuestra Plantilla</h3>
-            
-            <div class="plantilla-layout">
-                
-                <div class="pitch-wrapper">
-                    <div class="line-center"></div>
-                    <div class="circle-center"></div>
-                    <div class="area-top"></div>
-                    <div class="area-bottom"></div>
-                    
-                    <div class="shirt-mini gk" style="left:50%; top:88%;"><div class="shirt-mini-icon">1</div><div class="shirt-mini-name">LITUMA</div></div>
-                    <div class="shirt-mini" style="left:15%; top:68%;"><div class="shirt-mini-icon">2</div><div class="shirt-mini-name">GUARTAZACA</div></div>
-                    <div class="shirt-mini" style="left:35%; top:74%;"><div class="shirt-mini-icon">19</div><div class="shirt-mini-name">PEREZ</div></div>
-                    <div class="shirt-mini" style="left:65%; top:74%;"><div class="shirt-mini-icon">10</div><div class="shirt-mini-name">ESTUPIÑAN</div></div>
-                    <div class="shirt-mini" style="left:85%; top:68%;"><div class="shirt-mini-icon">4</div><div class="shirt-mini-name">PESANTEZ</div></div>
-                    
-                    <div class="shirt-mini" style="left:50%; top:50%;"><div class="shirt-mini-icon">16</div><div class="shirt-mini-name">PUNIN</div></div>
-                    <div class="shirt-mini" style="left:30%; top:35%;"><div class="shirt-mini-icon">23</div><div class="shirt-mini-name">AYUI</div></div>
-                    <div class="shirt-mini" style="left:70%; top:35%;"><div class="shirt-mini-icon">6</div><div class="shirt-mini-name">CAÑAR</div></div>
-                    
-                    <div class="shirt-mini" style="left:20%; top:15%;"><div class="shirt-mini-icon">11</div><div class="shirt-mini-name">JARAMILLO</div></div>
-                    <div class="shirt-mini" style="left:50%; top:10%;"><div class="shirt-mini-icon">14</div><div class="shirt-mini-name">PESANTEZ</div></div>
-                    <div class="shirt-mini" style="left:80%; top:15%;"><div class="shirt-mini-icon">3</div><div class="shirt-mini-name">GALLO</div></div>
+        <div id="tab-plantilla" class="tab-content" style="display:none;">
+            <h3 class="section-title">Formación y Plantel</h3>
+            <div class="plantilla-container">
+                <div class="pitch-3d">
+                    <div class="pitch-lines"></div>
+                    <div class="player-pin" style="left:50%; top:85%;"><div class="shirt">1</div><div class="p-name">LITUMA</div></div>
+                    <div class="player-pin" style="left:20%; top:65%;"><div class="shirt">2</div><div class="p-name">GUARTAZACA</div></div>
+                    <div class="player-pin" style="left:40%; top:70%;"><div class="shirt">19</div><div class="p-name">PEREZ</div></div>
+                    <div class="player-pin" style="left:60%; top:70%;"><div class="shirt">10</div><div class="p-name">ESTUPIÑAN</div></div>
+                    <div class="player-pin" style="left:80%; top:65%;"><div class="shirt">4</div><div class="p-name">PESANTEZ</div></div>
+                    <div class="player-pin" style="left:50%; top:45%;"><div class="shirt">16</div><div class="p-name">PUNIN</div></div>
+                    <div class="player-pin" style="left:30%; top:35%;"><div class="shirt">23</div><div class="p-name">AYUI</div></div>
+                    <div class="player-pin" style="left:70%; top:35%;"><div class="shirt">6</div><div class="p-name">CAÑAR</div></div>
+                    <div class="player-pin" style="left:20%; top:15%;"><div class="shirt">11</div><div class="p-name">JARAMILLO</div></div>
+                    <div class="player-pin" style="left:50%; top:10%;"><div class="shirt">14</div><div class="p-name">PESANTEZ</div></div>
+                    <div class="player-pin" style="left:80%; top:15%;"><div class="shirt">3</div><div class="p-name">GALLO</div></div>
                 </div>
-
-                <div class="player-list-wrapper">
-                    <div class="player-list-item"><div class="player-list-number">1</div><div class="player-list-info"><div class="player-list-name">LITUMA LUIS</div><div class="player-list-pos">Portero</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">2</div><div class="player-list-info"><div class="player-list-name">GUARTAZACA MICHAEL</div><div class="player-list-pos">Lateral Izquierdo</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">3</div><div class="player-list-info"><div class="player-list-name">GALLO BRANDON</div><div class="player-list-pos">Extremo Derecho</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">4</div><div class="player-list-info"><div class="player-list-name">PESANTEZ ANGEL</div><div class="player-list-pos">Lateral Derecho</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">5</div><div class="player-list-info"><div class="player-list-name">ORTIZ VICTOR</div><div class="player-list-pos">Interior Derecho</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">6</div><div class="player-list-info"><div class="player-list-name">CAÑAR BRYAN</div><div class="player-list-pos">Interior Derecho</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">7</div><div class="player-list-info"><div class="player-list-name">PUNIN RONAL</div><div class="player-list-pos">Pivote / MCD</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">8</div><div class="player-list-info"><div class="player-list-name">GUAZHIMA BRYAN</div><div class="player-list-pos">Pivote / MCD</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">9</div><div class="player-list-info"><div class="player-list-name">ESTUPIÑAN JAIRO</div><div class="player-list-pos">Defensa Central</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">10</div><div class="player-list-info"><div class="player-list-name">ESTUPIÑAN JORGE</div><div class="player-list-pos">Defensa Central</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">11</div><div class="player-list-info"><div class="player-list-name">JARAMILLO ISRAEL</div><div class="player-list-pos">Extremo Izquierdo</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">12</div><div class="player-list-info"><div class="player-list-name">ARMIJOS ROBERTH</div><div class="player-list-pos">Interior Izquierdo</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">13</div><div class="player-list-info"><div class="player-list-name">ARMIJOS CARLOS</div><div class="player-list-pos">Interior Izquierdo</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">14</div><div class="player-list-info"><div class="player-list-name">PESANTEZ PABLO</div><div class="player-list-pos">Delantero Centro</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">15</div><div class="player-list-info"><div class="player-list-name">SAMANIEGO LEONARDO</div><div class="player-list-pos">Lateral Izquierdo</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">16</div><div class="player-list-info"><div class="player-list-name">PUNIN BRYAN</div><div class="player-list-pos">Pivote / MCD</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">17</div><div class="player-list-info"><div class="player-list-name">VALDIVIESO GREISO</div><div class="player-list-pos">Delantero Centro</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">18</div><div class="player-list-info"><div class="player-list-name">TOLEDO ROMARIO</div><div class="player-list-pos">Lateral Izquierdo</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">19</div><div class="player-list-info"><div class="player-list-name">PEREZ EDILBERTO</div><div class="player-list-pos">Defensa Central</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">20</div><div class="player-list-info"><div class="player-list-name">FERNANDEZ BRYAN</div><div class="player-list-pos">Lateral Derecho</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">21</div><div class="player-list-info"><div class="player-list-name">TUITS EDGAR</div><div class="player-list-pos">Extremo Izquierdo</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">22</div><div class="player-list-info"><div class="player-list-name">ROMERO ALEXIS</div><div class="player-list-pos">Lateral Derecho</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">23</div><div class="player-list-info"><div class="player-list-name">AYUI GEORDY</div><div class="player-list-pos">Interior Izquierdo</div></div></div>
-                    <div class="player-list-item"><div class="player-list-number">24</div><div class="player-list-info"><div class="player-list-name">FLORES ALEXIS</div><div class="player-list-pos">Extremo Izquierdo</div></div></div>
-                </div>
-
+                <div class="player-list" id="listaCompleta">
+                    </div>
             </div>
         </div>
-
-        <div id="tab-calendario" class="tab-content">
-            <h3 class="section-title">Calendario Oficial</h3>
-            <p style="color: #aaa; text-align: center; margin-top: 50px;">Aquí irá el fixture de partidos...</p>
-        </div>
-
-        <div id="tab-tienda" class="tab-content">
-            <h3 class="section-title">Tienda Oficial</h3>
-            <p style="color: #aaa; text-align: center; margin-top: 50px;">Aquí irán las camisetas y merchandising...</p>
-        </div>
-
     </main>
 
     <nav class="bottom-nav">
-        <a class="nav-item active" onclick="switchTab('hoy', this)">
-            <span class="nav-icon">🏠</span>
-            <span>Hoy</span>
-        </a>
-        <a class="nav-item" onclick="switchTab('plantilla', this)">
-            <span class="nav-icon">👥</span>
-            <span>Plantilla</span>
-        </a>
-        <a class="nav-item" onclick="switchTab('calendario', this)">
-            <span class="nav-icon">📅</span>
-            <span>Calendario</span>
-        </a>
-        <a class="nav-item" onclick="switchTab('tienda', this)">
-            <span class="nav-icon">🛍️</span>
-            <span>Tienda</span>
-        </a>
-        <a href="index.html" class="nav-item">
-            <span class="nav-icon">🚪</span>
-            <span>Salir</span>
-        </a>
+        <div class="nav-btn active" onclick="showTab('hoy')"><span>🏠</span>HOY</div>
+        <div class="nav-btn" onclick="showTab('plantilla')"><span>👥</span>PLANTILLA</div>
+        <a href="index.html" class="nav-btn"><span>🚪</span>SALIR</a>
     </nav>
 
     <script>
-        // Cargar nombre del usuario desde localStorage
-        const usuarioGuardado = localStorage.getItem('usuarioLegion') || 'Socio';
-        document.getElementById('userNameDisplay').textContent = usuarioGuardado;
+        document.getElementById('userName').textContent = localStorage.getItem('usuarioLegion') || 'Socio';
 
-        // Leer el partido actualizado por el administrador (desde localStorage)
-        const partidoActivo = JSON.parse(localStorage.getItem('proxPartidoLegion'));
-        if(partidoActivo) {
-            // Reemplazar la fecha
-            const fechaParts = partidoActivo.fecha.split('-');
-            if(fechaParts.length === 3) {
-                const fechaObj = new Date(fechaParts[0], fechaParts[1]-1, fechaParts[2]);
-                const fechaFormat = fechaObj.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
-                const finalFecha = fechaFormat.charAt(0).toUpperCase() + fechaFormat.slice(1);
-                document.querySelector('.match-footer').textContent = `📅 ${finalFecha}, ${partidoActivo.hora} hrs | 🏟️ ${partidoActivo.estadio}`;
-            }
-            
-            // Inyectar datos en el HTML
-            document.querySelector('.match-header').textContent = partidoActivo.torneo;
-            document.querySelectorAll('.team-name')[1].textContent = partidoActivo.rival;
-
-            // INYECTAR EL ESCUDO DEL RIVAL SUBIDO POR EL ADMIN
-            const cajaLogoRival = document.querySelectorAll('.team-logo')[1];
-            if (partidoActivo.logoRival) {
-                cajaLogoRival.innerHTML = `<img src="${partidoActivo.logoRival}" alt="Escudo Rival" style="width: 40px; height: 40px; object-fit: contain;">`;
-            } else {
-                cajaLogoRival.innerHTML = '🛡️'; 
-            }
+        function showTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tab).style.display = 'block';
+            event.currentTarget.classList.add('active');
         }
 
-        // Función para cambiar de pestañas
-        function switchTab(tabId, element) {
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            
-            element.classList.add('active');
-            document.getElementById('tab-' + tabId).classList.add('active');
+        // Cargar partido desde Admin
+        const data = JSON.parse(localStorage.getItem('proxPartidoLegion'));
+        if(data) {
+            document.getElementById('rivalName').textContent = data.rival;
+            document.getElementById('torneoText').textContent = data.torneo;
+            document.getElementById('matchFooter').textContent = `📅 ${data.fecha} - ${data.hora} | 🏟️ ${data.estadio}`;
+            if(data.logoRival) document.getElementById('rivalLogo').innerHTML = `<img src="${data.logoRival}">`;
         }
+
+        // Cargar Lista Jugadores (Demo 24)
+        const jugadores = [
+            {n:1, name:"LITUMA LUIS", p:"POR"}, {n:2, name:"GUARTAZACA M.", p:"LTI"},
+            {n:19, name:"PEREZ E.", p:"DFC"}, {n:10, name:"ESTUPIÑAN J.", p:"DFC"},
+            {n:4, name:"PESANTEZ A.", p:"LTD"}, {n:16, name:"PUNIN B.", p:"MCD"},
+            {n:23, name:"AYUI G.", p:"II"}, {n:6, name:"CAÑAR B.", p:"ID"},
+            {n:11, name:"JARAMILLO I.", p:"EI"}, {n:14, name:"PESANTEZ P.", p:"DC"},
+            {n:3, name:"GALLO B.", p:"ED"}
+        ];
+        const lista = document.getElementById('listaCompleta');
+        jugadores.forEach(j => {
+            lista.innerHTML += `<div class="p-item"><div class="p-number">${j.n}</div><div class="p-data"><h4>${j.name}</h4><p>${j.p}</p></div></div>`;
+        });
     </script>
 </body>
 </html>
