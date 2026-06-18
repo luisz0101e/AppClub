@@ -2,16 +2,17 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Principal - Legión Técnica</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Legión Técnica - App Oficial</title>
     <style>
         :root {
             --club-gold: #C5A059; 
+            --club-gold-dark: #A68042;
             --bg-deep: #0A0A0A; 
             --card-bg: #1A1A1A; 
-            --hover-bg: #262626;
             --text-main: #ffffff;
             --text-muted: #aaaaaa;
+            --nav-bg: #121212;
         }
 
         * {
@@ -19,272 +20,394 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-deep);
             color: var(--text-main);
             display: flex;
+            flex-direction: column;
             height: 100vh;
             overflow: hidden;
         }
 
-        /* MENÚ LATERAL (SIDEBAR) */
-        .sidebar {
-            width: 250px;
+        /* HEADER SUPERIOR */
+        .top-bar {
             background: var(--card-bg);
-            border-right: 1px solid #333;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 0;
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar-header {
-            text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #333;
-            margin-bottom: 20px;
-        }
-
-        .sidebar-logo {
-            width: 80px;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        .sidebar-title {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--club-gold);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .nav-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            padding: 0 15px;
-        }
-
-        .nav-item {
-            padding: 12px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-muted);
-            font-weight: 600;
-            transition: all 0.2s ease;
-            text-decoration: none;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background: var(--hover-bg);
-            color: var(--club-gold);
-        }
-
-        .logout-btn {
-            margin-top: auto;
-            margin-left: 15px;
-            margin-right: 15px;
-            background: #4A1515;
-            color: #ff6b6b;
-            text-align: center;
-            justify-content: center;
-        }
-
-        .logout-btn:hover {
-            background: #661a1a;
-            color: white;
-        }
-
-        /* CONTENIDO PRINCIPAL */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            padding: 30px;
-        }
-
-        .top-header {
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
+            border-bottom: 1px solid #333;
+            z-index: 10;
         }
 
-        .greeting h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-
-        .greeting p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+        .top-bar-logo {
+            height: 35px;
+            object-fit: contain;
         }
 
         .user-profile {
             display: flex;
             align-items: center;
             gap: 10px;
-            background: var(--card-bg);
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: 1px solid #333;
+        }
+
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--club-gold);
         }
 
         .avatar {
             width: 35px;
             height: 35px;
-            background: var(--club-gold);
+            background: #333;
+            border: 2px solid var(--club-gold);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--bg-deep);
-            font-weight: bold;
+            font-size: 1.2rem;
         }
 
-        /* TARJETAS DE RESUMEN (DASHBOARD) */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        /* CONTENIDO PRINCIPAL (SCROLL) */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 90px; /* Espacio para la barra inferior */
         }
 
-        .card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid #333;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            border-top: 3px solid var(--club-gold);
-        }
-
-        .card h3 {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--club-gold);
+            padding-left: 10px;
         }
 
-        .card .value {
-            font-size: 2.5rem;
+        /* CARNET DE SOCIO VIRTUAL */
+        .socio-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 1px solid var(--club-gold);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        .socio-card::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .socio-type {
+            color: var(--club-gold);
+            font-size: 0.8rem;
             font-weight: bold;
-            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
         }
 
-        .card .desc {
-            font-size: 0.85rem;
-            color: #4caf50; /* Verde para indicar estado positivo */
-            margin-top: 5px;
+        .socio-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 5px;
         }
 
-        /* RESPONSIVO MÓVIL */
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                padding: 10px;
-                border-right: none;
-                border-bottom: 1px solid #333;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-            .sidebar-header {
-                padding-bottom: 0;
-                border-bottom: none;
-                margin-bottom: 0;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-            .sidebar-logo {
-                width: 40px;
-                margin-bottom: 0;
-            }
-            .nav-menu {
-                flex-direction: row;
-                overflow-x: auto;
-                padding: 0;
-            }
-            .nav-item span {
-                display: none; /* Oculta texto en móvil, deja solo icono */
-            }
-            .logout-btn {
-                margin: 0;
-            }
-            .main-content {
-                padding: 20px;
-            }
+        .socio-status {
+            display: inline-block;
+            background: #2A803A;
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: bold;
         }
+
+        /* PRÓXIMO PARTIDO */
+        .match-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            border: 1px solid #333;
+        }
+
+        .match-header {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .team {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .team-logo {
+            width: 60px;
+            height: 60px;
+            background: #222;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .team-logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .team-name {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .vs {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--club-gold);
+            padding: 0 15px;
+        }
+
+        .match-footer {
+            background: #111;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: var(--club-gold);
+        }
+
+        /* NOTICIAS RÁPIDAS */
+        .news-scroll {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: none; /* Ocultar scrollbar en Firefox */
+        }
+        .news-scroll::-webkit-scrollbar { display: none; } /* Ocultar scrollbar en Chrome/Safari */
+
+        .news-card {
+            min-width: 200px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .news-img {
+            height: 100px;
+            background: #333 url('https://images.unsplash.com/photo-1518605368461-1ee7c688e404?auto=format&fit=crop&q=80&w=400') center/cover;
+        }
+
+        .news-content {
+            padding: 12px;
+        }
+
+        .news-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .news-date {
+            font-size: 0.75rem;
+            color: var(--club-gold);
+        }
+
+        /* BARRA DE NAVEGACIÓN INFERIOR (TIPO APP) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0 15px 0;
+            border-top: 1px solid #333;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-icon {
+            font-size: 1.4rem;
+        }
+
+        .nav-item.active {
+            color: var(--club-gold);
+        }
+
+        .nav-item.active .nav-icon {
+            transform: scale(1.1);
+        }
+
+        /* PANTALLAS OCULTAS */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="./escudolegion.png" alt="Legión Técnica" class="sidebar-logo">
-            <div class="sidebar-title">Legión Técnica</div>
+    <header class="top-bar">
+        <img src="./escudolegion.png" alt="Legión" class="top-bar-logo">
+        <div class="user-profile">
+            <span class="user-name" id="userNameDisplay">Socio</span>
+            <div class="avatar">👤</div>
         </div>
-        <nav>
-            <ul class="nav-menu">
-                <a href="#" class="nav-item active">⚽ <span>Resumen</span></a>
-                <a href="#" class="nav-item">👥 <span>Plantilla</span></a>
-                <a href="#" class="nav-item">📅 <span>Asistencia</span></a>
-                <a href="#" class="nav-item">💰 <span>Finanzas</span></a>
-                <a href="#" class="nav-item">📋 <span>Pizarra Táctica</span></a>
-            </ul>
-        </nav>
-        <a href="index.html" class="nav-item logout-btn">🚪 <span>Cerrar Sesión</span></a>
-    </aside>
+    </header>
 
     <main class="main-content">
-        <header class="top-header">
-            <div class="greeting">
-                <h1 id="welcomeText">Hola, Profe</h1>
-                <p>Aquí tienes el resumen de tu equipo hoy.</p>
-            </div>
-            <div class="user-profile">
-                <div class="avatar">DT</div>
-                <span id="userNameDisplay">Director Técnico</span>
-            </div>
-        </header>
 
-        <div class="dashboard-grid">
-            <div class="card">
-                <h3>👥 Jugadores Activos</h3>
-                <div class="value">24</div>
-                <div class="desc">+2 desde el mes pasado</div>
+        <div id="tab-hoy" class="tab-content active">
+            
+            <div class="socio-card">
+                <div class="socio-type">Socio Fundador</div>
+                <div class="socio-number" id="socioNumber">#0142</div>
+                <div class="socio-status">AL DÍA</div>
             </div>
-            <div class="card">
-                <h3>📅 Próximo Partido</h3>
-                <div class="value" style="font-size: 1.5rem; margin-top: 10px;">vs. Atlético FC</div>
-                <div class="desc" style="color: var(--club-gold);">Sábado, 15:00 hrs</div>
+
+            <h3 class="section-title">Próximo Partido</h3>
+            <div class="match-card">
+                <div class="match-header">Final - Campeonato Local</div>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo">
+                            <img src="./escudolegion.png" alt="Legión">
+                        </div>
+                        <div class="team-name">Legión Técnica</div>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo">🛡️</div>
+                        <div class="team-name">Atlético FC</div>
+                    </div>
+                </div>
+                <div class="match-footer">📅 Sábado 25, 15:00 hrs | 🏟️ Estadio Central</div>
             </div>
-            <div class="card">
-                <h3>💰 Cuotas al Día</h3>
-                <div class="value">85%</div>
-                <div class="desc">18 de 24 jugadores pagados</div>
+
+            <h3 class="section-title">Última Hora</h3>
+            <div class="news-scroll">
+                <div class="news-card">
+                    <div class="news-img"></div>
+                    <div class="news-content">
+                        <div class="news-title">Presentamos la nueva indumentaria 2026</div>
+                        <div class="news-date">Hace 2 horas</div>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&q=80&w=400');"></div>
+                    <div class="news-content">
+                        <div class="news-title">Resumen de la victoria en semifinales</div>
+                        <div class="news-date">Ayer</div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div id="tab-noticias" class="tab-content">
+            <h3 class="section-title">Noticias del Club</h3>
+            <p style="color: #aaa; text-align: center; margin-top: 50px;">Aquí irá el feed completo de noticias...</p>
+        </div>
+
+        <div id="tab-calendario" class="tab-content">
+            <h3 class="section-title">Calendario Oficial</h3>
+            <p style="color: #aaa; text-align: center; margin-top: 50px;">Aquí irá el fixture de partidos...</p>
+        </div>
+
+        <div id="tab-tienda" class="tab-content">
+            <h3 class="section-title">Tienda Oficial</h3>
+            <p style="color: #aaa; text-align: center; margin-top: 50px;">Aquí irán las camisetas y merchandising...</p>
+        </div>
+
     </main>
 
+    <nav class="bottom-nav">
+        <a class="nav-item active" onclick="switchTab('hoy', this)">
+            <span class="nav-icon">🏠</span>
+            <span>Hoy</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('noticias', this)">
+            <span class="nav-icon">📰</span>
+            <span>Noticias</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('calendario', this)">
+            <span class="nav-icon">📅</span>
+            <span>Calendario</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('tienda', this)">
+            <span class="nav-icon">🛍️</span>
+            <span>Tienda</span>
+        </a>
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">⚙️</span>
+            <span>Salir</span>
+        </a>
+    </nav>
+
     <script>
-        // Recuperar el nombre del usuario desde localStorage si existe
-        const usuarioGuardado = localStorage.getItem('usuarioLegion') || 'Profe';
+        // Cargar nombre del usuario
+        const usuarioGuardado = localStorage.getItem('usuarioLegion') || 'Socio';
         document.getElementById('userNameDisplay').textContent = usuarioGuardado;
-        document.getElementById('welcomeText').textContent = 'Hola, ' + usuarioGuardado;
+
+        // Función para cambiar de pestañas en la app
+        function switchTab(tabId, element) {
+            // Quitar clase active de todos los botones e iconos
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            // Ocultar todas las pantallas
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            
+            // Activar el botón presionado y mostrar su pantalla
+            element.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
     </script>
 </body>
 </html>
