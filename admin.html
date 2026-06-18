@@ -3,164 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Legión Técnica</title>
+    <title>Legión Admin - Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --club-gold: #C5A059; 
-            --bg-deep: #0A0A0A; 
-            --card-bg: #1A1A1A; 
-            --input-bg: #262626;
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-
-        body { background-color: var(--bg-deep); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
-
-        /* SIDEBAR DE ADMINISTRADOR */
-        .sidebar { width: 260px; background: var(--card-bg); border-right: 1px solid #333; display: flex; flex-direction: column; padding: 20px 0; }
-        .sidebar-header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #333; margin-bottom: 20px; }
-        .sidebar-logo { width: 70px; margin-bottom: 10px; }
-        .sidebar-title { font-size: 1rem; color: var(--club-gold); font-weight: bold; letter-spacing: 2px; }
-        .badge { background: #8C1919; color: white; font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; margin-top: 5px; display: inline-block;}
-        
-        .nav-item { padding: 15px 20px; color: var(--text-muted); text-decoration: none; display: block; border-left: 4px solid transparent; transition: 0.3s; }
-        .nav-item:hover, .nav-item.active { background: #222; border-left-color: var(--club-gold); color: white; }
-
-        /* ÁREA DE TRABAJO */
-        .main-area { flex: 1; padding: 40px; overflow-y: auto; background: #121212; }
-        h1 { margin-bottom: 30px; font-size: 2rem; border-bottom: 2px solid #333; padding-bottom: 10px; }
-
-        /* FORMULARIOS ESTILO CMS */
-        .admin-card { background: var(--card-bg); padding: 25px; border-radius: 10px; border: 1px solid #333; margin-bottom: 30px; max-width: 800px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .admin-card h3 { color: var(--club-gold); margin-bottom: 20px; font-size: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
-        
+        :root { --club-gold: #C5A059; --bg-deep: #050505; --card-bg: #111; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Urbanist', sans-serif; }
+        body { background: var(--bg-deep); color: white; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: #000; border-right: 1px solid #222; padding: 40px 20px; display: flex; flex-direction: column; gap: 30px; }
+        .sidebar h2 { color: var(--club-gold); font-size: 1.2rem; letter-spacing: 2px; text-align: center; }
+        .nav-link { color: #888; text-decoration: none; font-weight: 700; font-size: 0.8rem; padding: 12px; border-radius: 4px; transition: 0.3s; }
+        .nav-link.active, .nav-link:hover { background: #111; color: var(--club-gold); border-left: 3px solid var(--club-gold); }
+        .main { flex: 1; padding: 60px; overflow-y: auto; }
+        .card { background: var(--card-bg); padding: 40px; border-radius: 8px; border: 1px solid #222; max-width: 700px; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group.full { grid-column: 1 / -1; }
-        
-        label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; font-weight: bold; }
-        input, select, textarea { width: 100%; padding: 12px; background: var(--input-bg); border: 1px solid #444; color: white; border-radius: 6px; outline: none; }
-        input[type="file"] { padding: 9px; cursor: pointer; }
-        input:focus, textarea:focus { border-color: var(--club-gold); }
-        
-        .btn-save { background: var(--club-gold); color: black; border: none; padding: 12px 25px; font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.2s; }
-        .btn-save:hover { background: #D4AF37; }
-
-        /* NOTIFICACIÓN DE ÉXITO */
-        #toast { position: fixed; top: 20px; right: -300px; background: #2A803A; color: white; padding: 15px 25px; border-radius: 8px; font-weight: bold; transition: right 0.4s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.4); z-index: 1000; }
-        #toast.show { right: 20px; }
+        label { display: block; font-size: 0.7rem; font-weight: 900; color: var(--club-gold); margin-bottom: 8px; text-transform: uppercase; }
+        input { width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: white; border-radius: 4px; outline: none; }
+        .btn-save { background: var(--club-gold); color: black; border: none; padding: 15px; width: 100%; margin-top: 30px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        #toast { position: fixed; bottom: 20px; right: 20px; background: #2A803A; padding: 15px 30px; border-radius: 4px; display: none; }
     </style>
 </head>
 <body>
-
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="./escudolegion.png" alt="Legión" class="sidebar-logo">
-            <div class="sidebar-title">LEGIÓN TÉCNICA</div>
-            <div class="badge">MODO ADMINISTRADOR</div>
-        </div>
-        <nav>
-            <a href="#" class="nav-item active">📅 Actualizar Partido</a>
-            <a href="#" class="nav-item">📰 Publicar Noticia</a>
-            <a href="#" class="nav-item">👥 Gestionar Socios</a>
-            <a href="#" class="nav-item">🛍️ Subir Producto</a>
-            <a href="index.html" class="nav-item" style="margin-top: 50px; color: #ff6b6b;">🚪 Cerrar Sesión</a>
-        </nav>
-    </aside>
-
-    <main class="main-area">
-        <h1>Gestor de Contenidos</h1>
-
-        <div class="admin-card">
-            <h3>Actualizar Próximo Partido <span>⚙️</span></h3>
-            <form id="formPartido">
+    <div class="sidebar">
+        <img src="./escudolegion.png" style="width: 80px; margin: 0 auto;">
+        <h2>ADMIN PANEL</h2>
+        <a href="#" class="nav-link active">ACTUALIZAR PARTIDO</a>
+        <a href="index.html" class="nav-link" style="color: #ff4444; margin-top: auto;">CERRAR SESIÓN</a>
+    </div>
+    <div class="main">
+        <h1 style="margin-bottom: 40px; font-size: 2.5rem;">GESTIÓN DE <span>CONTENIDOS</span></h1>
+        <div class="card">
+            <form id="partidoForm">
                 <div class="form-grid">
-                    <div class="form-group">
-                        <label>Rival</label>
-                        <input type="text" id="rival" placeholder="Ej. Atlético FC" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Torneo / Competición</label>
-                        <input type="text" id="torneo" placeholder="Ej. Final - Campeonato Local" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Fecha</label>
-                        <input type="date" id="fecha" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Hora</label>
-                        <input type="time" id="hora" required>
-                    </div>
-                    <div class="form-group full">
-                        <label>Estadio / Lugar</label>
-                        <input type="text" id="estadio" placeholder="Ej. Estadio Central" required>
-                    </div>
-                    
-                    <div class="form-group full">
-                        <label>Escudo del Rival (Imagen PNG/JPG)</label>
-                        <input type="file" id="logoRivalInput" accept="image/png, image/jpeg">
-                        <small style="color: #888; font-size: 0.8rem; margin-top: 5px; display: block;">Si no subes nada, se mantendrá el escudo anterior o se usará uno genérico.</small>
-                    </div>
+                    <div><label>Rival</label><input type="text" id="rival" required></div>
+                    <div><label>Torneo</label><input type="text" id="torneo" required></div>
+                    <div><label>Fecha</label><input type="date" id="fecha" required></div>
+                    <div><label>Hora</label><input type="time" id="hora" required></div>
+                    <div style="grid-column: 1/3;"><label>Estadio</label><input type="text" id="estadio" required></div>
+                    <div style="grid-column: 1/3;"><label>Escudo Rival</label><input type="file" id="logoRival" accept="image/*"></div>
                 </div>
-                <button type="submit" class="btn-save">💾 Guardar y Publicar en la App</button>
+                <button type="submit" class="btn-save">Publicar en la App</button>
             </form>
         </div>
-    </main>
-
-    <div id="toast">¡Datos actualizados con éxito en la App! ✅</div>
-
+    </div>
+    <div id="toast">¡Actualizado con éxito! ✅</div>
     <script>
-        // Cargar datos actuales si existen
-        window.onload = function() {
-            const partidoGuardado = JSON.parse(localStorage.getItem('proxPartidoLegion'));
-            if(partidoGuardado) {
-                document.getElementById('rival').value = partidoGuardado.rival || '';
-                document.getElementById('torneo').value = partidoGuardado.torneo || '';
-                document.getElementById('fecha').value = partidoGuardado.fecha || '';
-                document.getElementById('hora').value = partidoGuardado.hora || '';
-                document.getElementById('estadio').value = partidoGuardado.estadio || '';
-            }
-        };
-
-        // Guardar nuevo partido con la imagen convertida
-        document.getElementById('formPartido').addEventListener('submit', function(e) {
+        document.getElementById('partidoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const fileInput = document.getElementById('logoRivalInput');
-            const dataAnterior = JSON.parse(localStorage.getItem('proxPartidoLegion')) || {};
-            
-            // Función para guardar todo
-            const guardarDatos = (logoBase64) => {
-                const partidoData = {
+            const file = document.getElementById('logoRival').files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const data = {
                     rival: document.getElementById('rival').value,
                     torneo: document.getElementById('torneo').value,
                     fecha: document.getElementById('fecha').value,
                     hora: document.getElementById('hora').value,
                     estadio: document.getElementById('estadio').value,
-                    logoRival: logoBase64 // Aquí se guarda la foto
+                    logoRival: event.target.result
                 };
-
-                localStorage.setItem('proxPartidoLegion', JSON.stringify(partidoData));
-
-                const toast = document.getElementById('toast');
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3000);
+                localStorage.setItem('proxPartidoLegion', JSON.stringify(data));
+                const t = document.getElementById('toast');
+                t.style.display = 'block';
+                setTimeout(() => t.style.display = 'none', 3000);
             };
-
-            // Verificar si el admin subió una foto nueva
-            if (fileInput.files.length > 0) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    // event.target.result es la imagen convertida a texto
-                    guardarDatos(event.target.result); 
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                // Si no sube nada, mantén la foto que ya estaba antes (si existe)
-                guardarDatos(dataAnterior.logoRival || null);
-            }
+            if(file) reader.readAsDataURL(file);
+            else reader.onload({target: {result: null}});
         });
     </script>
 </body>
