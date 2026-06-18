@@ -2,165 +2,39 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - Legión Técnica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --club-gold: #C5A059; 
-            --bg-deep: #0A0A0A; 
-            --card-bg: #1A1A1A; 
-            --input-bg: #262626;
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-
-        body {
-            background-color: var(--bg-deep);
-            background-image: radial-gradient(circle at top right, #222 0%, var(--bg-deep) 70%);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .reg-container {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 500px;
-            padding: 40px 30px;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
-            border: 1px solid #333;
-            position: relative;
-        }
-
-        .logo-small {
-            width: 80px;
-            display: block;
-            margin: 0 auto 20px;
-        }
-
-        h2 { text-align: center; color: var(--club-gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
-        p.subtitle { text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 30px; }
-
-        /* Formulario */
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-size: 0.8rem; font-weight: bold; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
-        
-        input, select {
-            width: 100%; padding: 14px; background: var(--input-bg); border: 1px solid #444;
-            color: white; border-radius: 8px; outline: none; font-size: 1rem; transition: 0.3s;
-        }
-        
-        input:focus, select:focus { border-color: var(--club-gold); box-shadow: 0 0 10px rgba(197, 160, 89, 0.2); }
-
-        .btn-reg {
-            width: 100%; padding: 15px; background: var(--club-gold); color: black;
-            border: none; border-radius: 8px; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 1px; cursor: pointer; margin-top: 10px; transition: 0.3s;
-        }
-
-        .btn-reg:hover { background: #D4AF37; transform: translateY(-2px); }
-
-        .back-link { display: block; text-align: center; margin-top: 25px; color: var(--text-muted); text-decoration: none; font-size: 0.85rem; }
-        .back-link:hover { color: var(--club-gold); }
-
-        /* Mensaje de Éxito */
-        #successMsg {
-            display: none; text-align: center;
-        }
-        .success-icon { font-size: 60px; color: #2A803A; margin-bottom: 20px; }
+        :root { --club-gold: #C5A059; --bg-deep: #050505; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Urbanist', sans-serif; }
+        body { background: var(--bg-deep); color: white; display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
+        .card { background: #0a0a0a; padding: 50px; border-radius: 0; border: 1px solid #1a1a1a; width: 100%; max-width: 450px; text-align: center; }
+        h2 { color: var(--club-gold); letter-spacing: 2px; margin-bottom: 30px; text-transform: uppercase; }
+        input { width: 100%; padding: 14px; background: #111; border: 1px solid #222; color: white; margin-bottom: 20px; border-radius: 4px; }
+        .btn { width: 100%; padding: 16px; background: var(--club-gold); color: black; border: none; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+        #success { display: none; }
     </style>
 </head>
 <body>
-
-    <div class="reg-container">
-        <div id="formContent">
-            <img src="./escudolegion.png" alt="Legión" class="logo-small">
-            <h2>Únete a la Legión</h2>
-            <p class="subtitle">Crea tu perfil oficial en el sistema</p>
-
-            <form id="registroForm">
-                <div class="form-group">
-                    <label>Nombre Completo</label>
-                    <input type="text" id="regNombre" placeholder="Ej. Juan Pérez" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" id="regEmail" placeholder="ejemplo@correo.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Tipo de Usuario</label>
-                    <select id="regTipo" required>
-                        <option value="socio">Socio / Hincha</option>
-                        <option value="jugador">Jugador de Plantilla</option>
-                    </select>
-                </div>
-
-                <div class="form-group" id="posicionCaja" style="display:none;">
-                    <label>Posición en el Campo</label>
-                    <select id="regPos">
-                        <option value="Portero">Portero</option>
-                        <option value="Defensa">Defensa</option>
-                        <option value="Medio">Mediocampista</option>
-                        <option value="Delantero">Delantero</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <input type="password" id="regPass" placeholder="••••••••" required>
-                </div>
-
-                <button type="submit" class="btn-reg">Finalizar Registro</button>
-            </form>
-
-            <a href="index.html" class="back-link">¿Ya tienes cuenta? Inicia Sesión</a>
-        </div>
-
-        <div id="successMsg">
-            <div class="success-icon">✅</div>
-            <h2 style="color: white;">¡Registro Exitoso!</h2>
-            <p style="color: #aaa; margin: 15px 0 30px;">Tu perfil ha sido creado. Un administrador verificará tus datos pronto.</p>
-            <a href="index.html" class="btn-reg" style="display: block; text-decoration: none;">Ir al Login</a>
-        </div>
+    <div class="card" id="formCard">
+        <h2>Unirse a la Legión</h2>
+        <input type="text" placeholder="Nombre Completo">
+        <input type="email" placeholder="Correo Electrónico">
+        <input type="password" placeholder="Contraseña">
+        <button class="btn" onclick="registrar()">Completar Registro</button>
     </div>
-
+    <div class="card" id="success">
+        <div style="font-size: 50px; color: #2A803A;">✅</div>
+        <h2>¡BIENVENIDO!</h2>
+        <p style="color: #888; margin-bottom: 30px;">Tu perfil ha sido creado con éxito.</p>
+        <a href="index.html" class="btn" style="text-decoration: none; display: block;">Ir al Login</a>
+    </div>
     <script>
-        // Mostrar campo de posición solo si elige "jugador"
-        document.getElementById('regTipo').addEventListener('change', function() {
-            const caja = document.getElementById('posicionCaja');
-            caja.style.display = (this.value === 'jugador') ? 'block' : 'none';
-        });
-
-        // Lógica de guardado simulado
-        document.getElementById('registroForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nuevoUsuario = {
-                nombre: document.getElementById('regNombre').value,
-                email: document.getElementById('regEmail').value,
-                tipo: document.getElementById('regTipo').value,
-                pos: document.getElementById('regPos').value
-            };
-
-            // Aquí podríamos guardarlo en localStorage o enviarlo al NUC
-            console.log("Nuevo usuario registrado:", nuevoUsuario);
-
-            // Ocultar formulario y mostrar éxito
-            document.getElementById('formContent').style.display = 'none';
-            document.getElementById('successMsg').style.display = 'block';
-        });
+        function registrar() {
+            document.getElementById('formCard').style.display = 'none';
+            document.getElementById('success').style.display = 'block';
+        }
     </script>
 </body>
 </html>
-
-¡Pruébelo, Profe! Si llena el registro y le da a "Finalizar", verá una pantalla de éxito muy profesional que lo invita a volver al inicio. 
-
-¿Qué le parece cómo va quedando el ecosistema de la **Legión Técnica**? ¡Ya tiene Login, Registro y Dashboard Élite! 😎 ¿Cuál es el siguiente paso en su pizarra táctica mental?
