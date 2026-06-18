@@ -42,6 +42,7 @@
         
         label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; font-weight: bold; }
         input, select, textarea { width: 100%; padding: 12px; background: var(--input-bg); border: 1px solid #444; color: white; border-radius: 6px; outline: none; }
+        input[type="file"] { padding: 9px; cursor: pointer; }
         input:focus, textarea:focus { border-color: var(--club-gold); }
         
         .btn-save { background: var(--club-gold); color: black; border: none; padding: 12px 25px; font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.2s; }
@@ -96,18 +97,15 @@
                         <label>Estadio / Lugar</label>
                         <input type="text" id="estadio" placeholder="Ej. Estadio Central" required>
                     </div>
+                    
+                    <div class="form-group full">
+                        <label>Escudo del Rival (Imagen PNG/JPG)</label>
+                        <input type="file" id="logoRivalInput" accept="image/png, image/jpeg">
+                        <small style="color: #888; font-size: 0.8rem; margin-top: 5px; display: block;">Si no subes nada, se mantendrá el escudo anterior o se usará uno genérico.</small>
+                    </div>
                 </div>
                 <button type="submit" class="btn-save">💾 Guardar y Publicar en la App</button>
             </form>
-        </div>
-
-        <div class="admin-card" style="opacity: 0.6; pointer-events: none;">
-            <h3>Publicar Nueva Noticia <span>🔒</span></h3>
-            <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px;">(Módulo en construcción para subir imágenes)</p>
-            <div class="form-group">
-                <label>Título de la Noticia</label>
-                <input type="text" placeholder="Ej. Nueva camiseta 2026">
-            </div>
         </div>
     </main>
 
@@ -118,33 +116,51 @@
         window.onload = function() {
             const partidoGuardado = JSON.parse(localStorage.getItem('proxPartidoLegion'));
             if(partidoGuardado) {
-                document.getElementById('rival').value = partidoGuardado.rival;
-                document.getElementById('torneo').value = partidoGuardado.torneo;
-                document.getElementById('fecha').value = partidoGuardado.fecha;
-                document.getElementById('hora').value = partidoGuardado.hora;
-                document.getElementById('estadio').value = partidoGuardado.estadio;
+                document.getElementById('rival').value = partidoGuardado.rival || '';
+                document.getElementById('torneo').value = partidoGuardado.torneo || '';
+                document.getElementById('fecha').value = partidoGuardado.fecha || '';
+                document.getElementById('hora').value = partidoGuardado.hora || '';
+                document.getElementById('estadio').value = partidoGuardado.estadio || '';
             }
         };
 
-        // Guardar nuevo partido en la memoria
+        // Guardar nuevo partido con la imagen convertida
         document.getElementById('formPartido').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const partidoData = {
-                rival: document.getElementById('rival').value,
-                torneo: document.getElementById('torneo').value,
-                fecha: document.getElementById('fecha').value,
-                hora: document.getElementById('hora').value,
-                estadio: document.getElementById('estadio').value
+            const fileInput = document.getElementById('logoRivalInput');
+            const dataAnterior = JSON.parse(localStorage.getItem('proxPartidoLegion')) || {};
+            
+            // Función para guardar todo
+            const guardarDatos = (logoBase64) => {
+                const partidoData = {
+                    rival: document.getElementById('rival').value,
+                    torneo: document.getElementById('torneo').value,
+                    fecha: document.getElementById('fecha').value,
+                    hora: document.getElementById('hora').value,
+                    estadio: document.getElementById('estadio').value,
+                    logoRival: logoBase64 // Aquí se guarda la foto
+                };
+
+                localStorage.setItem('proxPartidoLegion', JSON.stringify(partidoData));
+
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
             };
 
-            // Guarda la información en la memoria local del navegador
-            localStorage.setItem('proxPartidoLegion', JSON.stringify(partidoData));
-
-            // Mostrar notificación de éxito
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            // Verificar si el admin subió una foto nueva
+            if (fileInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    // event.target.result es la imagen convertida a texto
+                    guardarDatos(event.target.result); 
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                // Si no sube nada, mantén la foto que ya estaba antes (si existe)
+                guardarDatos(dataAnterior.logoRival || null);
+            }
         });
     </script>
 </body>
