@@ -67,12 +67,12 @@
         p {
             color: #888888;
             font-size: 0.95rem;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             letter-spacing: 0.5px;
         }
 
         .input-group {
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
@@ -103,6 +103,7 @@
             box-shadow: 0 0 8px rgba(197, 160, 89, 0.3);
         }
 
+        /* Botón Principal (Login) */
         .btn-login {
             width: 100%;
             padding: 14px;
@@ -116,7 +117,7 @@
             letter-spacing: 1.5px;
             cursor: pointer;
             transition: background 0.3s ease, transform 0.1s ease;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .btn-login:hover {
@@ -127,17 +128,48 @@
             transform: scale(0.98);
         }
 
-        .forgot-password {
-            display: block;
-            margin-top: 25px;
+        /* Botón Secundario (Registro) */
+        .btn-register {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
             color: var(--club-gold);
+            border: 2px solid var(--club-gold);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.1s ease;
+            margin-top: 15px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .btn-register:hover {
+            background: rgba(197, 160, 89, 0.1); 
+        }
+
+        .btn-register:active {
+            transform: scale(0.98);
+        }
+
+        /* Enlace de recuperación */
+        .links-container {
+            margin-top: 25px;
+        }
+
+        .forgot-password {
+            color: #888888;
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 600;
+            transition: color 0.3s ease;
         }
 
         .forgot-password:hover {
-            color: #ffffff; 
+            color: var(--club-gold); 
         }
     </style>
 </head>
@@ -161,27 +193,34 @@
             </div>
 
             <button type="submit" class="btn-login">Iniciar Sesión</button>
+            
+            <a href="registro.html" class="btn-register">Regístrate como Socio</a>
         </form>
 
-        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        <div class="links-container">
+            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        </div>
     </div>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
-            const user = document.getElementById('username').value;
+            const user = document.getElementById('username').value.toLowerCase();
             
             const btn = document.querySelector('.btn-login');
             btn.innerHTML = "Verificando...";
             btn.style.opacity = "0.7";
 
             setTimeout(() => {
-                // Guardamos el nombre del usuario temporalmente en el navegador
                 const nombreCorto = user.split('@')[0];
                 localStorage.setItem('usuarioLegion', nombreCorto);
                 
-                // Redirigir al Dashboard principal
-                window.location.href = 'dashboard.html';
+                // MÁGIA: Redirección según el rol
+                if (user === 'admin' || user === 'admin@legion.com') {
+                    window.location.href = 'admin.html'; // Va al panel de control
+                } else {
+                    window.location.href = 'dashboard.html'; // Va a la app del socio/jugador
+                }
             }, 1000);
         });
     </script>
