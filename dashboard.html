@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal - Legión Técnica</title>
+    <style>
+        :root {
+            --club-gold: #C5A059; 
+            --bg-deep: #0A0A0A; 
+            --card-bg: #1A1A1A; 
+            --hover-bg: #262626;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* MENÚ LATERAL (SIDEBAR) */
+        .sidebar {
+            width: 250px;
+            background: var(--card-bg);
+            border-right: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--club-gold);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 0 15px;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--hover-bg);
+            color: var(--club-gold);
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            margin-left: 15px;
+            margin-right: 15px;
+            background: #4A1515;
+            color: #ff6b6b;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .logout-btn:hover {
+            background: #661a1a;
+            color: white;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .greeting h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .greeting p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #333;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            background: var(--club-gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--bg-deep);
+            font-weight: bold;
+        }
+
+        /* TARJETAS DE RESUMEN (DASHBOARD) */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-top: 3px solid var(--club-gold);
+        }
+
+        .card h3 {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card .value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .card .desc {
+            font-size: 0.85rem;
+            color: #4caf50; /* Verde para indicar estado positivo */
+            margin-top: 5px;
+        }
+
+        /* RESPONSIVO MÓVIL */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 10px;
+                border-right: none;
+                border-bottom: 1px solid #333;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .sidebar-header {
+                padding-bottom: 0;
+                border-bottom: none;
+                margin-bottom: 0;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .sidebar-logo {
+                width: 40px;
+                margin-bottom: 0;
+            }
+            .nav-menu {
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 0;
+            }
+            .nav-item span {
+                display: none; /* Oculta texto en móvil, deja solo icono */
+            }
+            .logout-btn {
+                margin: 0;
+            }
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="./escudolegion.png" alt="Legión Técnica" class="sidebar-logo">
+            <div class="sidebar-title">Legión Técnica</div>
+        </div>
+        <nav>
+            <ul class="nav-menu">
+                <a href="#" class="nav-item active">⚽ <span>Resumen</span></a>
+                <a href="#" class="nav-item">👥 <span>Plantilla</span></a>
+                <a href="#" class="nav-item">📅 <span>Asistencia</span></a>
+                <a href="#" class="nav-item">💰 <span>Finanzas</span></a>
+                <a href="#" class="nav-item">📋 <span>Pizarra Táctica</span></a>
+            </ul>
+        </nav>
+        <a href="index.html" class="nav-item logout-btn">🚪 <span>Cerrar Sesión</span></a>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="greeting">
+                <h1 id="welcomeText">Hola, Profe</h1>
+                <p>Aquí tienes el resumen de tu equipo hoy.</p>
+            </div>
+            <div class="user-profile">
+                <div class="avatar">DT</div>
+                <span id="userNameDisplay">Director Técnico</span>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>👥 Jugadores Activos</h3>
+                <div class="value">24</div>
+                <div class="desc">+2 desde el mes pasado</div>
+            </div>
+            <div class="card">
+                <h3>📅 Próximo Partido</h3>
+                <div class="value" style="font-size: 1.5rem; margin-top: 10px;">vs. Atlético FC</div>
+                <div class="desc" style="color: var(--club-gold);">Sábado, 15:00 hrs</div>
+            </div>
+            <div class="card">
+                <h3>💰 Cuotas al Día</h3>
+                <div class="value">85%</div>
+                <div class="desc">18 de 24 jugadores pagados</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Recuperar el nombre del usuario desde localStorage si existe
+        const usuarioGuardado = localStorage.getItem('usuarioLegion') || 'Profe';
+        document.getElementById('userNameDisplay').textContent = usuarioGuardado;
+        document.getElementById('welcomeText').textContent = 'Hola, ' + usuarioGuardado;
+    </script>
+</body>
+</html>
