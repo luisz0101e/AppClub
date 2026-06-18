@@ -3,225 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legión Técnica - Login</title>
+    <title>Legión Técnica - Portal Oficial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            /* Tono Dorado Sofisticado */
-            --club-gold: #C5A059; 
-            /* Fondo oscuro profundo */
-            --bg-deep: #0A0A0A; 
-            /* Fondo de tarjeta sutil */
-            --card-bg: #1A1A1A; 
-            /* Fondo de inputs */
-            --input-bg: #262626; 
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
+        :root { --club-gold: #C5A059; --bg-deep: #050505; --card-bg: #0a0a0a; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Urbanist', sans-serif; }
         body {
             background-color: var(--bg-deep);
-            background-image: radial-gradient(circle at top, #222222 0%, var(--bg-deep) 70%);
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            background-image: radial-gradient(circle at top, #151515 0%, var(--bg-deep) 70%);
+            color: #ffffff; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden;
         }
-
         .login-container {
-            background: var(--card-bg);
-            padding: 50px 35px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 420px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); 
-            border: 1px solid #333; 
+            background: var(--card-bg); padding: 60px 40px; border-radius: 0px; width: 100%; max-width: 440px;
+            text-align: center; border: 1px solid #1a1a1a; position: relative;
         }
-
-        .logo {
-            width: 160px; 
-            height: auto; 
-            object-fit: contain;
-            margin-bottom: 25px;
-            display: block; 
-            margin-left: auto;
-            margin-right: auto;
+        .login-container::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--club-gold), transparent);
         }
-
-        h2 {
-            margin-bottom: 5px;
-            font-size: 1.8rem;
-            color: #ffffff;
-            font-weight: 800; 
-            text-transform: uppercase; 
-            letter-spacing: 2.5px; 
+        .logo { width: 180px; margin-bottom: 30px; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.2)); }
+        h2 { font-size: 2.2rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }
+        h2 span { color: var(--club-gold); }
+        p { color: #888; font-size: 0.9rem; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
+        .input-group { margin-bottom: 25px; text-align: left; }
+        label { display: block; font-size: 0.75rem; color: var(--club-gold); font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        input {
+            width: 100%; padding: 16px; background: #111; border: 1px solid #222; border-radius: 4px;
+            color: white; font-size: 1rem; outline: none; transition: 0.3s;
         }
-
-        p {
-            color: #888888;
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-            letter-spacing: 0.5px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.8rem;
-            margin-bottom: 8px;
-            color: #aaaaaa;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 14px 15px;
-            background: var(--input-bg);
-            border: 1px solid #3d3d3d; 
-            border-radius: 6px;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .input-group input:focus {
-            border-color: var(--club-gold);
-            box-shadow: 0 0 8px rgba(197, 160, 89, 0.3);
-        }
-
-        /* Botón Principal (Login) */
+        input:focus { border-color: var(--club-gold); background: #151515; }
         .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: var(--club-gold);
-            color: #121212;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.1s ease;
-            margin-top: 5px;
+            width: 100%; padding: 16px; background: var(--club-gold); color: black; border: none;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s;
         }
-
-        .btn-login:hover {
-            background: #D4AF37; 
-        }
-
-        .btn-login:active {
-            transform: scale(0.98);
-        }
-
-        /* Botón Secundario (Registro) */
+        .btn-login:hover { background: #D4AF37; transform: scale(1.02); }
         .btn-register {
-            width: 100%;
-            padding: 14px;
-            background: transparent;
-            color: var(--club-gold);
-            border: 2px solid var(--club-gold);
-            border-radius: 6px;
-            font-size: 0.95rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.1s ease;
-            margin-top: 15px;
-            display: block;
-            text-decoration: none;
-        }
-
-        .btn-register:hover {
-            background: rgba(197, 160, 89, 0.1); 
-        }
-
-        .btn-register:active {
-            transform: scale(0.98);
-        }
-
-        /* Enlace de recuperación */
-        .links-container {
-            margin-top: 25px;
-        }
-
-        .forgot-password {
-            color: #888888;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .forgot-password:hover {
-            color: var(--club-gold); 
+            display: block; width: 100%; padding: 14px; margin-top: 20px; background: transparent;
+            color: var(--club-gold); border: 1px solid var(--club-gold); text-decoration: none;
+            font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
-
     <div class="login-container">
-        <img src="./escudolegion.png" alt="Escudo de la Legión Técnica" class="logo">
-        
-        <h2>LEGIÓN TÉCNICA</h2>
+        <img src="./escudolegion.png" class="logo">
+        <h2>LEGIÓN <span>TÉCNICA</span></h2>
         <p>Sistema de Gestión Deportiva</p>
-
         <form id="loginForm">
             <div class="input-group">
-                <label for="username">Usuario o Correo</label>
-                <input type="text" id="username" placeholder="Tu usuario" required>
+                <label>Usuario</label>
+                <input type="text" id="username" placeholder="ADMIN / SOCIO" required>
             </div>
-
             <div class="input-group">
-                <label for="password">Contraseña</label>
+                <label>Contraseña</label>
                 <input type="password" id="password" placeholder="••••••••" required>
             </div>
-
-            <button type="submit" class="btn-login">Iniciar Sesión</button>
-            
-            <a href="registro.html" class="btn-register">Regístrate como Socio</a>
+            <button type="submit" class="btn-login">Ingresar</button>
+            <a href="registro.html" class="btn-register">Registrarse</a>
         </form>
-
-        <div class="links-container">
-            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-        </div>
     </div>
-
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault(); 
+            e.preventDefault();
             const user = document.getElementById('username').value.toLowerCase();
-            
-            const btn = document.querySelector('.btn-login');
-            btn.innerHTML = "Verificando...";
-            btn.style.opacity = "0.7";
-
-            setTimeout(() => {
-                const nombreCorto = user.split('@')[0];
-                localStorage.setItem('usuarioLegion', nombreCorto);
-                
-                // MÁGIA: Redirección según el rol
-                if (user === 'admin' || user === 'admin@legion.com') {
-                    window.location.href = 'admin.html'; // Va al panel de control
-                } else {
-                    window.location.href = 'dashboard.html'; // Va a la app del socio/jugador
-                }
-            }, 1000);
+            localStorage.setItem('usuarioLegion', user.split('@')[0]);
+            if (user === 'admin') { window.location.href = 'admin.html'; } 
+            else { window.location.href = 'dashboard.html'; }
         });
     </script>
 </body>
