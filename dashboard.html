@@ -19,21 +19,12 @@
         /* CONTENEDOR PRINCIPAL */
         .main-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 130px; }
         .content-wrapper { max-width: 1000px; margin: 0 auto; }
-
         .section-title { font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: var(--club-gold); border-bottom: 1px solid #1a1a1a; padding-bottom: 10px; margin-top: 30px; }
         .section-title:first-child { margin-top: 0; }
 
         /* CARNET SOCIO */
-        .socio-card {
-            background: linear-gradient(135deg, #111 0%, #050505 100%);
-            border: 1px solid #222; border-left: 4px solid var(--club-gold);
-            border-radius: 8px; padding: 25px; margin-bottom: 20px;
-            position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .socio-card::after {
-            content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px;
-            background: radial-gradient(circle, rgba(197,160,89,0.15) 0%, transparent 70%); border-radius: 50%;
-        }
+        .socio-card { background: linear-gradient(135deg, #111 0%, #050505 100%); border: 1px solid #222; border-left: 4px solid var(--club-gold); border-radius: 8px; padding: 25px; margin-bottom: 20px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .socio-card::after { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(197,160,89,0.15) 0%, transparent 70%); border-radius: 50%; }
         .s-type { color: var(--club-gold); font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
         .s-num { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; letter-spacing: 2px; }
         .s-status { display: inline-block; background: rgba(42, 128, 58, 0.2); color: #4caf50; font-size: 0.75rem; padding: 5px 12px; border-radius: 4px; font-weight: 900; border: 1px solid #4caf50; text-transform: uppercase; }
@@ -60,42 +51,38 @@
         .vs { color: var(--club-gold); font-size: 1.8rem; font-weight: 900; }
         .match-info { background: #000; padding: 12px; border-radius: 6px; color: var(--club-gold); font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; border: 1px solid #111; }
 
-        /* NOTICIAS */
+        /* NOTICIAS & GALERÍA */
         .news-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; }
         .news-scroll::-webkit-scrollbar { display: none; }
-        .news-card { min-width: 260px; max-width: 300px; background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid #1a1a1a; transition: 0.3s; }
-        .news-img { height: 140px; background: #222 center/cover; }
+        .news-card { min-width: 280px; max-width: 320px; background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid #1a1a1a; }
+        
+        .gallery-container { position: relative; width: 100%; height: 180px; overflow: hidden; background: #222; }
+        .gallery-slide { display: none; width: 100%; height: 100%; background-position: center; background-size: cover; }
+        .gallery-slide.active { display: block; animation: fade 0.5s; }
+        .gal-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); color: var(--club-gold); border: none; padding: 8px 12px; cursor: pointer; font-weight: 900; font-size: 1rem; border-radius: 5px; z-index: 2; transition: 0.2s; }
+        .gal-btn:active { background: var(--club-gold); color: black; }
+        .gal-prev { left: 5px; }
+        .gal-next { right: 5px; }
+        @keyframes fade { from {opacity: 0.5} to {opacity: 1} }
+
         .news-content { padding: 15px; }
-        .news-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; line-height: 1.4; color: white; }
-        .news-date { font-size: 0.7rem; color: var(--club-gold); font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .news-title { font-size: 1rem; font-weight: 900; margin-bottom: 8px; line-height: 1.3; color: white; text-transform: uppercase;}
+        .news-desc { font-size: 0.8rem; color: #ccc; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .news-date { font-size: 0.7rem; color: var(--club-gold); font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border-top: 1px solid #222; padding-top: 10px;}
 
         /* CANCHA 3D Y PLANTILLA */
         .plantilla-container { display: flex; gap: 20px; height: 500px; }
-        .pitch-3d {
-            flex: 1.5; background: #0f2e0f; border-radius: 8px; position: relative; border: 2px solid rgba(255,255,255,0.1);
-            perspective: 800px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .pitch-lines {
-            width: 100%; height: 100%; position: absolute; border: 2px solid rgba(255,255,255,0.3);
-            transform: rotateX(20deg); transform-origin: bottom;
-            background-image: repeating-linear-gradient(0deg, #1a3a1a, #1a3a1a 10%, #163316 10%, #163316 20%);
-        }
+        .pitch-3d { flex: 1.5; background: #0f2e0f; border-radius: 8px; position: relative; border: 2px solid rgba(255,255,255,0.1); perspective: 800px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .pitch-lines { width: 100%; height: 100%; position: absolute; border: 2px solid rgba(255,255,255,0.3); transform: rotateX(20deg); transform-origin: bottom; background-image: repeating-linear-gradient(0deg, #1a3a1a, #1a3a1a 10%, #163316 10%, #163316 20%); }
         .player-pin { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; }
-        .shirt {
-            width: 28px; height: 28px; background: white; color: black; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900;
-            border: 2px solid var(--club-gold); box-shadow: 0 4px 10px rgba(0,0,0,0.7);
-        }
+        .shirt { width: 28px; height: 28px; background: white; color: black; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; border: 2px solid var(--club-gold); box-shadow: 0 4px 10px rgba(0,0,0,0.7); }
         .p-name { background: rgba(0,0,0,0.85); font-size: 9px; padding: 3px 6px; margin-top: 5px; border-radius: 4px; font-weight: 700; white-space: nowrap; border: 1px solid #333; }
 
         .player-list { flex: 1; overflow-y: auto; padding-right: 10px; }
         .player-list::-webkit-scrollbar { width: 6px; }
         .player-list::-webkit-scrollbar-thumb { background: var(--club-gold); border-radius: 10px;}
         .player-list::-webkit-scrollbar-track { background: #111; border-radius: 10px; }
-        .p-item {
-            background: var(--card-bg); border: 1px solid #1a1a1a; padding: 15px; border-radius: 8px;
-            display: flex; align-items: center; gap: 15px; margin-bottom: 10px; transition: 0.2s;
-        }
+        .p-item { background: var(--card-bg); border: 1px solid #1a1a1a; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
         .p-number { color: var(--club-gold); font-weight: 900; font-size: 1.4rem; width: 30px; text-align: center; }
         .p-data h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
         .p-data p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
@@ -111,10 +98,7 @@
         .btn-comprar:hover { background: #D4AF37; }
 
         /* NAV INFERIOR */
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; background: var(--bg-deep); display: flex;
-            justify-content: space-around; padding: 10px 0 15px; border-top: 1px solid #1a1a1a; z-index: 100;
-        }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--bg-deep); display: flex; justify-content: space-around; padding: 10px 0 15px; border-top: 1px solid #1a1a1a; z-index: 100; }
         .nav-btn { color: var(--text-muted); text-decoration: none; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; transition: 0.3s; }
         .nav-btn.active { color: var(--club-gold); transform: translateY(-2px); }
 
@@ -163,19 +147,15 @@
                 </div>
 
                 <h3 class="section-title">Última Hora</h3>
-                <div class="news-scroll">
+                <div class="news-scroll" id="contenedorNoticias">
                     <div class="news-card">
-                        <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1518605368461-1ee7c688e404?auto=format&fit=crop&q=80&w=400');"></div>
+                        <div class="gallery-container">
+                            <div class="gallery-slide active" style="background-image: url('https://images.unsplash.com/photo-1518605368461-1ee7c688e404?auto=format&fit=crop&q=80&w=400');"></div>
+                        </div>
                         <div class="news-content">
                             <div class="news-title">Presentamos la nueva indumentaria dorada 2026</div>
+                            <div class="news-desc">Una armadura digna de la Legión, con la última tecnología en absorción de sudor para nuestros jugadores.</div>
                             <div class="news-date">HACE 2 HORAS</div>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&q=80&w=400');"></div>
-                        <div class="news-content">
-                            <div class="news-title">Resumen táctico de la victoria en semifinales</div>
-                            <div class="news-date">AYER</div>
                         </div>
                     </div>
                 </div>
@@ -240,7 +220,7 @@
             <div class="modal-p" id="visionDisplay">Ser el club referente de la Amazonía ecuatoriana, reconocido por su excelencia táctica, formación de talento y solidez institucional.</div>
 
             <div class="modal-h4">HISTORIA DEL CLUB</div>
-            <div class="modal-p" id="historiaDisplay">Nacimos con la pasión de nuestra tierra. Representamos a El Pangui con orgullo, llevando los colores dorados como símbolo de la riqueza de nuestra gente y la fuerza de la Amazonía en cada partido que disputamos.</div>
+            <div class="modal-p" id="historiaDisplay">Nacimos con la pasión de nuestra tierra. Representamos a El Pangui con orgullo, llevando los colores dorados como símbolo de la riqueza de nuestra gente.</div>
         </div>
     </div>
 
@@ -254,7 +234,6 @@
     <script>
         document.getElementById('userName').textContent = localStorage.getItem('usuarioLegion') || 'Socio';
 
-        // Lógica de Pestañas
         function showTab(tab, element) {
             document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -262,39 +241,85 @@
             element.classList.add('active');
         }
 
-        // Lógica del Modal Conócenos
+        // Conócenos
         function abrirConocenos() {
             const info = JSON.parse(localStorage.getItem('clubInfoLegion'));
             if(info) {
-                // Solo si el admin guardó datos, los reemplazamos, si no, dejamos los por defecto
                 if(info.mision) document.getElementById('misionDisplay').textContent = info.mision;
                 if(info.vision) document.getElementById('visionDisplay').textContent = info.vision;
                 if(info.historia) document.getElementById('historiaDisplay').textContent = info.historia;
             }
             document.getElementById('modalConocenos').style.display = 'block';
         }
-
-        function cerrarConocenos() {
-            document.getElementById('modalConocenos').style.display = 'none';
-        }
+        function cerrarConocenos() { document.getElementById('modalConocenos').style.display = 'none'; }
 
         // Cargar partido
-        const data = JSON.parse(localStorage.getItem('proxPartidoLegion'));
-        if(data) {
-            document.getElementById('rivalName').textContent = data.rival;
-            document.getElementById('torneoText').textContent = data.torneo;
-            if(data.fecha) {
-                const parts = data.fecha.split('-');
+        const dataPartido = JSON.parse(localStorage.getItem('proxPartidoLegion'));
+        if(dataPartido) {
+            document.getElementById('rivalName').textContent = dataPartido.rival;
+            document.getElementById('torneoText').textContent = dataPartido.torneo;
+            if(dataPartido.fecha) {
+                const parts = dataPartido.fecha.split('-');
                 const f = new Date(parts[0], parts[1]-1, parts[2]);
-                const fechaFormat = f.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
-                document.getElementById('matchFooter').textContent = `📅 ${fechaFormat.toUpperCase()} - ${data.hora} HRS | 🏟️ ${data.estadio.toUpperCase()}`;
+                const fFormato = f.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+                document.getElementById('matchFooter').textContent = `📅 ${fFormato.toUpperCase()} - ${dataPartido.hora} HRS | 🏟️ ${dataPartido.estadio.toUpperCase()}`;
             }
-            if(data.logoRival) {
-                document.getElementById('rivalLogo').innerHTML = `<img src="${data.logoRival}">`;
-            }
+            if(dataPartido.logoRival) { document.getElementById('rivalLogo').innerHTML = `<img src="${dataPartido.logoRival}">`; }
         }
 
-        // Generar Lista de Jugadores
+        // LÓGICA DE GALERÍA DE NOTICIAS
+        const noticiaGuardada = JSON.parse(localStorage.getItem('noticiaLegion'));
+        if(noticiaGuardada && noticiaGuardada.imagenes && noticiaGuardada.imagenes.length > 0) {
+            let slidesHTML = '';
+            noticiaGuardada.imagenes.forEach((img, index) => {
+                slidesHTML += `<div class="gallery-slide ${index === 0 ? 'active' : ''}" style="background-image: url('${img}');"></div>`;
+            });
+            
+            // Poner botones solo si hay más de 1 foto
+            let controlesHTML = noticiaGuardada.imagenes.length > 1 ? `
+                <button class="gal-btn gal-prev" onclick="cambiarSlide(-1, event)">&#10094;</button>
+                <button class="gal-btn gal-next" onclick="cambiarSlide(1, event)">&#10095;</button>
+            ` : '';
+
+            const tarjetaNueva = `
+                <div class="news-card">
+                    <div class="gallery-container">
+                        ${slidesHTML}
+                        ${controlesHTML}
+                    </div>
+                    <div class="news-content">
+                        <div class="news-title">${noticiaGuardada.titulo}</div>
+                        <div class="news-desc">${noticiaGuardada.contenido}</div>
+                        <div class="news-date">${noticiaGuardada.fecha}</div>
+                    </div>
+                </div>
+            `;
+            
+            // Inyectar al principio del contenedor
+            const contenedor = document.getElementById('contenedorNoticias');
+            contenedor.innerHTML = tarjetaNueva + contenedor.innerHTML;
+        }
+
+        // Función global para mover las fotos
+        window.cambiarSlide = function(direccion, event) {
+            event.stopPropagation(); // Evita clics raros
+            const contenedorGaleria = event.target.closest('.gallery-container');
+            const slides = contenedorGaleria.querySelectorAll('.gallery-slide');
+            let indiceActivo = 0;
+            
+            slides.forEach((slide, index) => {
+                if(slide.classList.contains('active')) indiceActivo = index;
+                slide.classList.remove('active');
+            });
+            
+            indiceActivo += direccion;
+            if(indiceActivo >= slides.length) indiceActivo = 0; // Vuelve a la primera
+            if(indiceActivo < 0) indiceActivo = slides.length - 1; // Va a la última
+            
+            slides[indiceActivo].classList.add('active');
+        };
+
+        // Plantilla
         const jugadores = [
             {n:1, name:"LITUMA LUIS", p:"Portero"}, {n:2, name:"GUARTAZACA MICHAEL", p:"Lat. Izquierdo"},
             {n:3, name:"GALLO BRANDON", p:"Ext. Derecho"}, {n:4, name:"PESANTEZ ANGEL", p:"Lat. Derecho"},
