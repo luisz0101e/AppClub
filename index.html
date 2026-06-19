@@ -2,51 +2,77 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Legión Técnica - Portal Oficial</title>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --club-gold: #C5A059; --bg-deep: #050505; --card-bg: #0a0a0a; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Urbanist', sans-serif; }
+        
         body {
             background-color: var(--bg-deep);
             background-image: radial-gradient(circle at top, #151515 0%, var(--bg-deep) 70%);
-            color: #ffffff; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden;
+            color: #ffffff; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            
+            /* SOLUCIÓN PARA LA BARRA DEL CELULAR */
+            min-height: 100vh; 
+            min-height: 100dvh; /* Se adapta dinámicamente si hay barra de navegación */
+            padding: 20px; /* Margen de seguridad */
+            overflow-y: auto; /* Permite deslizar si la pantalla es muy pequeña */
         }
+        
         .login-container {
-            background: var(--card-bg); padding: 60px 40px; border-radius: 0px; width: 100%; max-width: 440px;
-            text-align: center; border: 1px solid #1a1a1a; position: relative;
+            background: var(--card-bg); 
+            padding: 50px 35px; 
+            border-radius: 8px; 
+            width: 100%; 
+            max-width: 440px;
+            text-align: center; 
+            border: 1px solid #1a1a1a; 
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
+        
         .login-container::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
             background: linear-gradient(90deg, transparent, var(--club-gold), transparent);
+            border-radius: 8px 8px 0 0;
         }
-        .logo { width: 180px; margin-bottom: 30px; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.2)); }
-        h2 { font-size: 2.2rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }
+        
+        .logo { width: 160px; margin-bottom: 25px; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.2)); }
+        h2 { font-size: 2rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 5px; }
         h2 span { color: var(--club-gold); }
-        p { color: #888; font-size: 0.9rem; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
-        .input-group { margin-bottom: 25px; text-align: left; }
+        p { color: #888; font-size: 0.85rem; margin-bottom: 35px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .input-group { margin-bottom: 20px; text-align: left; }
         label { display: block; font-size: 0.75rem; color: var(--club-gold); font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        
         input {
-            width: 100%; padding: 16px; background: #111; border: 1px solid #222; border-radius: 4px;
+            width: 100%; padding: 15px; background: #111; border: 1px solid #222; border-radius: 6px;
             color: white; font-size: 1rem; outline: none; transition: 0.3s;
         }
         input:focus { border-color: var(--club-gold); background: #151515; }
+        
         .btn-login {
-            width: 100%; padding: 16px; background: var(--club-gold); color: black; border: none;
-            font-weight: 900; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s;
+            width: 100%; padding: 15px; background: var(--club-gold); color: black; border: none; border-radius: 6px;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; margin-top: 5px;
         }
-        .btn-login:hover { background: #D4AF37; transform: scale(1.02); }
+        .btn-login:hover { background: #D4AF37; transform: translateY(-2px); }
+        
         .btn-register {
-            display: block; width: 100%; padding: 14px; margin-top: 20px; background: transparent;
+            display: block; width: 100%; padding: 14px; margin-top: 15px; background: transparent; border-radius: 6px;
             color: var(--club-gold); border: 1px solid var(--club-gold); text-decoration: none;
-            font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;
+            font-weight: 900; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: 0.3s;
         }
+        .btn-register:hover { background: rgba(197, 160, 89, 0.1); }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <img src="./escudolegion.png" class="logo">
+        <img src="./escudolegion.png" class="logo" alt="Escudo Legión">
         <h2>LEGIÓN <span>TÉCNICA</span></h2>
         <p>Sistema de Gestión Deportiva</p>
         <form id="loginForm">
@@ -67,8 +93,12 @@
             e.preventDefault();
             const user = document.getElementById('username').value.toLowerCase();
             localStorage.setItem('usuarioLegion', user.split('@')[0]);
-            if (user === 'admin') { window.location.href = 'admin.html'; } 
-            else { window.location.href = 'dashboard.html'; }
+            
+            if (user === 'admin' || user === 'admin@legion.com') { 
+                window.location.href = 'admin.html'; 
+            } else { 
+                window.location.href = 'dashboard.html'; 
+            }
         });
     </script>
 </body>
