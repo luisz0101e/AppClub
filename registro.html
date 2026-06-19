@@ -2,70 +2,167 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Registro - Legión Técnica</title>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --club-gold: #C5A059; --bg-deep: #050505; --card-bg: #0a0a0a;}
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Urbanist', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Urbanist', sans-serif; -webkit-tap-highlight-color: transparent;}
         body { background: var(--bg-deep); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; overflow-y: auto;}
         
-        .card { background: var(--card-bg); padding: 40px; border-radius: 8px; border: 1px solid #1a1a1a; width: 100%; max-width: 450px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h2 { color: var(--club-gold); letter-spacing: 2px; margin-bottom: 25px; text-transform: uppercase; font-weight: 900; }
+        .card { background: var(--card-bg); padding: 35px; border-radius: 12px; border: 1px solid #1a1a1a; width: 100%; max-width: 480px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; margin: 20px 0;}
+        .card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--club-gold), transparent); border-radius: 12px 12px 0 0; }
         
-        .form-group { margin-bottom: 15px; text-align: left; }
-        label { display: block; font-size: 0.75rem; font-weight: 900; color: var(--club-gold); margin-bottom: 5px; text-transform: uppercase; }
-        input, select { width: 100%; padding: 14px; background: #111; border: 1px solid #222; color: white; border-radius: 6px; outline: none; transition: 0.3s; }
-        input:focus, select:focus { border-color: var(--club-gold); }
+        h2 { color: var(--club-gold); letter-spacing: 2px; margin-bottom: 5px; text-transform: uppercase; font-weight: 900; text-align: center; font-size: 1.8rem;}
+        p.subtitle { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px;}
         
-        .btn { width: 100%; padding: 15px; background: var(--club-gold); color: black; border: none; font-weight: 900; text-transform: uppercase; cursor: pointer; border-radius: 6px; margin-top: 10px; transition: 0.3s; }
+        .form-group { margin-bottom: 18px; text-align: left; }
+        label { display: block; font-size: 0.75rem; font-weight: 900; color: var(--club-gold); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px;}
+        
+        input, select { width: 100%; padding: 14px; background: #111; border: 1px solid #222; color: white; border-radius: 6px; outline: none; transition: 0.3s; font-size: 0.95rem;}
+        input:focus, select:focus { border-color: var(--club-gold); background: #151515;}
+        
+        /* Cajas dinámicas */
+        .dinamico { display: none; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from {opacity: 0; transform: translateY(-5px);} to {opacity: 1; transform: translateY(0);} }
+
+        /* Tarjeta de Beneficios Socio */
+        .beneficios-caja { background: rgba(197, 160, 89, 0.1); border: 1px solid var(--club-gold); border-radius: 6px; padding: 15px; margin-bottom: 18px; text-align: left;}
+        .beneficios-caja h4 { color: var(--club-gold); font-weight: 900; margin-bottom: 5px; font-size: 0.85rem; text-transform: uppercase;}
+        .beneficios-caja ul { list-style: none; padding: 0; color: #ccc; font-size: 0.8rem; margin-bottom: 10px;}
+        .beneficios-caja li { margin-bottom: 4px; display: flex; align-items: center; gap: 8px;}
+        .beneficios-caja li::before { content: '✓'; color: var(--club-gold); font-weight: bold;}
+        .beneficios-pago { background: var(--club-gold); color: black; font-weight: 900; font-size: 0.75rem; padding: 5px; text-align: center; border-radius: 4px; text-transform: uppercase;}
+
+        .btn { width: 100%; padding: 16px; background: var(--club-gold); color: black; border: none; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 6px; margin-top: 10px; transition: 0.3s; }
         .btn:hover { background: #D4AF37; transform: translateY(-2px); }
         
-        #success { display: none; }
-        .back-link { display: block; margin-top: 20px; color: #888; text-decoration: none; font-size: 0.8rem; font-weight: 700; }
+        #success { display: none; text-align: center;}
+        .back-link { display: block; margin-top: 25px; color: #888; text-decoration: none; font-size: 0.85rem; font-weight: 700; text-align: center; transition: 0.3s;}
+        .back-link:hover { color: var(--club-gold); }
+
+        .file-hint { font-size: 0.65rem; color: #666; margin-top: 4px; font-weight: normal; text-transform: none;}
     </style>
 </head>
 <body>
     <div class="card" id="formCard">
         <h2>Unirse a la Legión</h2>
+        <p class="subtitle">Selecciona tu categoría</p>
+        
         <form id="registroForm">
             <div class="form-group">
-                <label>Nombre Completo</label>
-                <input type="text" id="regNombre" required>
-            </div>
-            <div class="form-group">
-                <label>Tipo de Usuario</label>
-                <select id="regTipo" required>
-                    <option value="Socio">Socio / Hincha</option>
-                    <option value="Jugador">Jugador Oficial</option>
+                <label>¿Cómo deseas registrarte?</label>
+                <select id="regTipo" onchange="cambiarFormulario()" required>
+                    <option value="" disabled selected>-- Elige una opción --</option>
+                    <option value="Hincha">Fan / Hincha (Gratis)</option>
+                    <option value="Jugador">Jugador Oficial (Plantilla)</option>
+                    <option value="Socio">Socio Oficial (Membresía)</option>
                 </select>
             </div>
+
             <div class="form-group">
-                <label>Foto de Perfil (Selfie)</label>
-                <input type="file" id="regFoto" accept="image/*" required>
+                <label>Nombre Completo</label>
+                <input type="text" id="regNombre" placeholder="Ej. Juan Pérez" required>
             </div>
+            
+            <div class="form-group">
+                <label>Correo Electrónico</label>
+                <input type="email" id="regEmail" placeholder="ejemplo@correo.com" required>
+            </div>
+
+            <div id="cajaJugador" class="dinamico">
+                <div class="form-group">
+                    <label>Número de Cédula (Validación DT)</label>
+                    <input type="number" id="regCedulaJugador" placeholder="190XXXXXXX">
+                </div>
+            </div>
+
+            <div id="cajaSocio" class="dinamico">
+                <div class="beneficios-caja">
+                    <h4>Beneficios Exclusivos</h4>
+                    <ul>
+                        <li>Carnet de Socio Virtual e Impreso</li>
+                        <li>Camiseta Oficial de la Legión</li>
+                        <li>Descuentos en locales asociados</li>
+                        <li>Acceso prioritario a noticias</li>
+                    </ul>
+                    <div class="beneficios-pago">⚠️ Requiere pago de inscripción inicial</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Teléfono (WhatsApp)</label>
+                    <input type="tel" id="regTelefono" placeholder="+593 99 999 9999">
+                </div>
+                
+                <div class="form-group">
+                    <label>Foto de tu Cédula (Frente)</label>
+                    <input type="file" id="regFotoCedula" accept="image/*">
+                    <div class="file-hint">Toma una foto clara o súbela de tu galería.</div>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label>Foto de Perfil</label>
+                <input type="file" id="regFoto" accept="image/*" required>
+                <div class="file-hint">Tómate una selfie ahora mismo o elige de tu galería.</div>
+            </div>
+
             <div class="form-group">
                 <label>Contraseña</label>
-                <input type="password" required>
+                <input type="password" required placeholder="Crea tu contraseña">
             </div>
-            <button type="submit" class="btn">Completar Registro</button>
-            <a href="index.html" class="back-link">Volver al Login</a>
+
+            <button type="submit" class="btn" id="btnSubmit">Completar Registro</button>
+            <a href="index.html" class="back-link">¿Ya tienes cuenta? Inicia sesión</a>
         </form>
     </div>
 
     <div class="card" id="success">
         <div style="font-size: 60px; color: #2A803A; margin-bottom: 10px;">✅</div>
-        <h2>¡BIENVENIDO!</h2>
-        <p style="color: #888; margin-bottom: 30px;">Tu perfil ha sido creado con éxito. Ahora tu foto aparecerá en la aplicación.</p>
+        <h2 id="exitoTitulo">¡REGISTRO EXITOSO!</h2>
+        <p style="color: #888; margin-bottom: 30px;" id="exitoMensaje">Tu perfil ha sido creado. Ahora podrás ingresar al sistema oficial del club.</p>
         <a href="index.html" class="btn" style="text-decoration: none; display: block;">Ir al Login</a>
     </div>
 
     <script>
+        // Función Mágica que cambia el formulario según lo que elijan
+        function cambiarFormulario() {
+            const tipo = document.getElementById('regTipo').value;
+            const cajaJugador = document.getElementById('cajaJugador');
+            const cajaSocio = document.getElementById('cajaSocio');
+            const btnSubmit = document.getElementById('btnSubmit');
+
+            // Resetear visualización
+            cajaJugador.style.display = 'none';
+            cajaSocio.style.display = 'none';
+
+            // Quitar el "requerido" a los campos ocultos para que no bloqueen el formulario
+            document.getElementById('regCedulaJugador').required = false;
+            document.getElementById('regTelefono').required = false;
+            document.getElementById('regFotoCedula').required = false;
+
+            if (tipo === 'Jugador') {
+                cajaJugador.style.display = 'block';
+                document.getElementById('regCedulaJugador').required = true;
+                btnSubmit.textContent = "Registrarme como Jugador";
+            } 
+            else if (tipo === 'Socio') {
+                cajaSocio.style.display = 'block';
+                document.getElementById('regTelefono').required = true;
+                document.getElementById('regFotoCedula').required = true;
+                btnSubmit.textContent = "Continuar con la Inscripción";
+            } 
+            else if (tipo === 'Hincha') {
+                btnSubmit.textContent = "Crear Cuenta Gratuita";
+            }
+        }
+
+        // Lógica para guardar la información
         document.getElementById('registroForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const nombre = document.getElementById('regNombre').value;
             const tipo = document.getElementById('regTipo').value;
+            const nombre = document.getElementById('regNombre').value;
             const archivoFoto = document.getElementById('regFoto').files[0];
 
             if(archivoFoto) {
@@ -74,12 +171,21 @@
                     const usuarioNuevo = {
                         nombre: nombre,
                         tipo: tipo,
-                        foto: event.target.result // Guardamos la foto en Base64
+                        foto: event.target.result
                     };
-                    // Lo guardamos en la memoria del navegador simulando la base de datos
-                    localStorage.setItem('usuarioLegionData', JSON.stringify(usuarioNuevo));
-                    localStorage.setItem('usuarioLegion', nombre); // Para el login
                     
+                    localStorage.setItem('usuarioLegionData', JSON.stringify(usuarioNuevo));
+                    localStorage.setItem('usuarioLegion', nombre); 
+                    
+                    // Personalizamos el mensaje de éxito según el tipo
+                    if(tipo === 'Socio') {
+                        document.getElementById('exitoMensaje').textContent = "Perfil pre-aprobado. Nos contactaremos contigo al número registrado para finalizar el pago inicial y entregarte tu camiseta.";
+                    } else if (tipo === 'Jugador') {
+                        document.getElementById('exitoMensaje').textContent = "Ficha deportiva creada. El cuerpo técnico validará tu cédula.";
+                    } else {
+                        document.getElementById('exitoMensaje').textContent = "Bienvenido a la comunidad de la Legión Técnica.";
+                    }
+
                     document.getElementById('formCard').style.display = 'none';
                     document.getElementById('success').style.display = 'block';
                 };
