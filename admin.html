@@ -39,7 +39,7 @@
 </head>
 <body>
     <div class="sidebar">
-        <img src="./escudolegion.png" style="width: 80px; margin: 0 auto 10px;">
+        <img src="./escudolegion.png" style="width: 80px; margin: 0 auto 10px;" alt="Escudo">
         <h2>LEGIÓN ADMIN</h2>
         <div class="nav-link active" onclick="switchTab('partido', this)">📅 Partido</div>
         <div class="nav-link" onclick="switchTab('noticias', this)">📰 Noticias</div>
@@ -68,19 +68,33 @@
 
         <div class="admin-card" id="tab-noticias">
             <h2 style="color: var(--club-gold); margin-bottom: 20px;">Publicar Noticia</h2>
-            <form id="formNoticia">
+            <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px;">(Módulo en construcción para subir imágenes)</p>
+            <form id="formNoticia" style="opacity: 0.6; pointer-events: none;">
                 <div class="form-group"><label>Título</label><input type="text" id="noticiaTitulo" required></div>
                 <div class="form-group" style="margin-top: 15px;"><label>Contenido</label><textarea id="noticiaContenido" required></textarea></div>
                 <button type="submit" class="btn-save">Publicar Noticia</button>
             </form>
         </div>
 
+        <div class="admin-card" id="tab-tienda">
+            <h2 style="color: var(--club-gold); margin-bottom: 20px;">Subir Producto a Tienda</h2>
+            <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px;">(Módulo en construcción para gestión de stock)</p>
+            <form id="formTienda" style="opacity: 0.6; pointer-events: none;">
+                <div class="form-grid">
+                    <div class="full"><label>Nombre del Producto</label><input type="text" required></div>
+                    <div><label>Precio</label><input type="number" required></div>
+                    <div><label>Foto</label><input type="file"></div>
+                </div>
+                <button type="submit" class="btn-save">Añadir a Catálogo</button>
+            </form>
+        </div>
+
         <div class="admin-card" id="tab-club">
             <h2 style="color: var(--club-gold); margin-bottom: 20px;">Identidad Institucional</h2>
             <form id="formClub">
-                <div class="form-group"><label>Misión</label><textarea id="clubMision"></textarea></div>
-                <div class="form-group" style="margin-top: 15px;"><label>Visión</label><textarea id="clubVision"></textarea></div>
-                <div class="form-group" style="margin-top: 15px;"><label>Historia Corta</label><textarea id="clubHistoria"></textarea></div>
+                <div class="form-group"><label>Misión</label><textarea id="clubMision" placeholder="Escribe la misión del club..."></textarea></div>
+                <div class="form-group" style="margin-top: 15px;"><label>Visión</label><textarea id="clubVision" placeholder="Escribe la visión del club..."></textarea></div>
+                <div class="form-group" style="margin-top: 15px;"><label>Historia Corta</label><textarea id="clubHistoria" placeholder="Escribe la historia del club..."></textarea></div>
                 <button type="submit" class="btn-save">Guardar Información</button>
             </form>
         </div>
@@ -89,6 +103,28 @@
     <div id="toast">¡DATOS ACTUALIZADOS! ✅</div>
 
     <script>
+        // Cargar datos al abrir la página
+        window.onload = function() {
+            // Cargar datos de partido si existen
+            const partidoData = JSON.parse(localStorage.getItem('proxPartidoLegion'));
+            if(partidoData) {
+                document.getElementById('rival').value = partidoData.rival || '';
+                document.getElementById('torneo').value = partidoData.torneo || '';
+                document.getElementById('fecha').value = partidoData.fecha || '';
+                document.getElementById('hora').value = partidoData.hora || '';
+                document.getElementById('estadio').value = partidoData.estadio || '';
+            }
+
+            // Cargar datos del club si existen
+            const clubData = JSON.parse(localStorage.getItem('clubInfoLegion'));
+            if(clubData) {
+                document.getElementById('clubMision').value = clubData.mision || '';
+                document.getElementById('clubVision').value = clubData.vision || '';
+                document.getElementById('clubHistoria').value = clubData.historia || '';
+            }
+        };
+
+        // Lógica para cambiar de pestañas
         function switchTab(tabId, el) {
             document.querySelectorAll('.admin-card').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -96,92 +132,52 @@
             el.classList.add('active');
         }
 
-        // Simulación de guardado masivo
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const toast = document.getElementById('toast');
-                
-                // Si es el del club, guardamos misión/visión
-                if(form.id === 'formClub') {
-                    const info = {
-                        mision: document.getElementById('clubMision').value,
-                        vision: document.getElementById('clubVision').value,
-                        historia: document.getElementById('clubHistoria').value
-                    };
-                    localStorage.setItem('clubInfoLegion', JSON.stringify(info));
-                }
-                
-                toast.style.display = 'block';
-                setTimeout(() => toast.style.display = 'none', 3000);
-            });
+        // Función para mostrar notificación
+        function mostrarToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 3000);
+        }
+
+        // Guardar Partido
+        document.getElementById('formPartido').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const file = document.getElementById('logoRival').files[0];
+            const dataAnterior = JSON.parse(localStorage.getItem('proxPartidoLegion')) || {};
+            
+            const guardarInfo = (logoBase64) => {
+                const data = {
+                    rival: document.getElementById('rival').value,
+                    torneo: document.getElementById('torneo').value,
+                    fecha: document.getElementById('fecha').value,
+                    hora: document.getElementById('hora').value,
+                    estadio: document.getElementById('estadio').value,
+                    logoRival: logoBase64
+                };
+                localStorage.setItem('proxPartidoLegion', JSON.stringify(data));
+                mostrarToast();
+            };
+
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(event) { guardarInfo(event.target.result); };
+                reader.readAsDataURL(file);
+            } else {
+                guardarInfo(dataAnterior.logoRival || null);
+            }
+        });
+
+        // Guardar Info del Club
+        document.getElementById('formClub').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const info = {
+                mision: document.getElementById('clubMision').value,
+                vision: document.getElementById('clubVision').value,
+                historia: document.getElementById('clubHistoria').value
+            };
+            localStorage.setItem('clubInfoLegion', JSON.stringify(info));
+            mostrarToast();
         });
     </script>
 </body>
 </html>
-
-### 🛠️ Paso 2: Actualiza tu `dashboard.html` (Tienda y Conócenos)
-
-Este código habilita la tienda y la sección de información del club.
-
-```html
-<div id="tab-tienda" class="tab-content" style="display:none;">
-    <h3 class="section-title">Tienda Oficial 2026</h3>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-        
-        <div style="background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid #222;">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/7792345067648257744" style="width: 100%; height: 150px; object-fit: cover;">
-            <div style="padding: 12px; text-align: center;">
-                <p style="font-weight: 900; font-size: 0.8rem; margin-bottom: 5px;">CAMISETA OFICIAL</p>
-                <p style="color: var(--club-gold); font-weight: 900;">$35.00</p>
-                <button style="width: 100%; background: var(--club-gold); border: none; padding: 8px; margin-top: 10px; font-weight: 900; font-size: 0.7rem; cursor: pointer;">COMPRAR</button>
-            </div>
-        </div>
-
-        <div style="background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid #222;">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/2837626122353658455" style="width: 100%; height: 150px; object-fit: cover;">
-            <div style="padding: 12px; text-align: center;">
-                <p style="font-weight: 900; font-size: 0.8rem; margin-bottom: 5px;">BALÓN ÉLITE</p>
-                <p style="color: var(--club-gold); font-weight: 900;">$25.00</p>
-                <button style="width: 100%; background: var(--club-gold); border: none; padding: 8px; margin-top: 10px; font-weight: 900; font-size: 0.7rem; cursor: pointer;">COMPRAR</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<button onclick="abrirConocenos()" style="width: 100%; padding: 15px; background: transparent; border: 1px solid var(--club-gold); color: var(--club-gold); font-weight: 900; margin-top: 20px; text-transform: uppercase; letter-spacing: 2px;">Conócenos</button>
-
-<div id="modalConocenos" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 1000; padding: 40px; overflow-y: auto;">
-    <button onclick="cerrarConocenos()" style="color: var(--club-gold); float: right; font-size: 2rem; background: transparent; border: none;">×</button>
-    <h2 style="color: var(--club-gold); font-weight: 900; letter-spacing: 2px; margin-bottom: 20px;">LEGIÓN TÉCNICA</h2>
-    <p style="color: #888; font-size: 0.8rem; margin-bottom: 30px;">Fundada en El Pangui, Zamora Chinchipe.</p>
-    
-    <h4 style="color: var(--club-gold); margin-bottom: 10px;">MISIÓN</h4>
-    <p id="misionDisplay">Formar deportistas de élite...</p>
-    
-    <h4 style="color: var(--club-gold); margin-top: 20px; margin-bottom: 10px;">VISIÓN</h4>
-    <p id="visionDisplay">Ser el referente de la Amazonía...</p>
-
-    <h4 style="color: var(--club-gold); margin-top: 20px; margin-bottom: 10px;">HISTORIA</h4>
-    <p id="historiaDisplay">Nacimos con la pasión de nuestra tierra...</p>
-</div>
-
-Y en el `<script>` de tu `dashboard.html`, agrega estas funciones:
-
-```javascript
-function abrirConocenos() {
-    const info = JSON.parse(localStorage.getItem('clubInfoLegion'));
-    if(info) {
-        document.getElementById('misionDisplay').textContent = info.mision;
-        document.getElementById('visionDisplay').textContent = info.vision;
-        document.getElementById('historiaDisplay').textContent = info.historia;
-    }
-    document.getElementById('modalConocenos').style.display = 'block';
-}
-
-function cerrarConocenos() {
-    document.getElementById('modalConocenos').style.display = 'none';
-}
-
-¡Con esto, Profe, tu aplicación ya no es solo una página, es un **Portal Completo de Club**! Actualiza tus archivos en GitHub y verás la diferencia de inmediato. 😎🚀
