@@ -17,7 +17,6 @@
         .avatar { width: 32px; height: 32px; border: 1px solid var(--club-gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; }
 
         /* CONTENEDOR PRINCIPAL */
-        /* Aumenté el padding-bottom a 130px para que nada quede oculto tras el menú inferior */
         .main-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 130px; }
         .content-wrapper { max-width: 1000px; margin: 0 auto; }
 
@@ -28,7 +27,7 @@
         .socio-card {
             background: linear-gradient(135deg, #111 0%, #050505 100%);
             border: 1px solid #222; border-left: 4px solid var(--club-gold);
-            border-radius: 8px; padding: 25px; margin-bottom: 30px;
+            border-radius: 8px; padding: 25px; margin-bottom: 20px;
             position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .socio-card::after {
@@ -38,6 +37,19 @@
         .s-type { color: var(--club-gold); font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
         .s-num { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; letter-spacing: 2px; }
         .s-status { display: inline-block; background: rgba(42, 128, 58, 0.2); color: #4caf50; font-size: 0.75rem; padding: 5px 12px; border-radius: 4px; font-weight: 900; border: 1px solid #4caf50; text-transform: uppercase; }
+
+        /* BOTÓN CONÓCENOS */
+        .btn-conocenos { width: 100%; padding: 15px; background: transparent; border: 1px solid var(--club-gold); color: var(--club-gold); font-weight: 900; border-radius: 8px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; margin-bottom: 30px; }
+        .btn-conocenos:hover { background: rgba(197, 160, 89, 0.1); }
+
+        /* MODAL CONÓCENOS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; padding: 30px; overflow-y: auto; }
+        .modal-content { max-width: 600px; margin: 40px auto 0; position: relative; }
+        .btn-cerrar { color: var(--club-gold); position: absolute; top: -20px; right: 0; font-size: 2.5rem; background: transparent; border: none; cursor: pointer; }
+        .modal-title { color: var(--club-gold); font-weight: 900; letter-spacing: 2px; margin-bottom: 5px; font-size: 2rem; }
+        .modal-subtitle { color: #888; font-size: 0.9rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; }
+        .modal-h4 { color: var(--club-gold); margin-top: 25px; margin-bottom: 10px; font-weight: 900; letter-spacing: 1px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+        .modal-p { color: #ccc; line-height: 1.6; font-size: 0.95rem; }
 
         /* MATCH CARD */
         .match-card { background: var(--card-bg); border-radius: 12px; padding: 25px; border: 1px solid #1a1a1a; margin-bottom: 30px; text-align: center; }
@@ -88,7 +100,17 @@
         .p-data h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
         .p-data p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
 
-        /* NAV INFERIOR PARA CELULARES */
+        /* TIENDA */
+        .tienda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .producto-card { background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid #222; }
+        .producto-img { width: 100%; height: 180px; object-fit: cover; }
+        .producto-info { padding: 15px; text-align: center; }
+        .producto-titulo { font-weight: 900; font-size: 0.85rem; margin-bottom: 5px; text-transform: uppercase; }
+        .producto-precio { color: var(--club-gold); font-weight: 900; font-size: 1.1rem; }
+        .btn-comprar { width: 100%; background: var(--club-gold); color: black; border: none; padding: 10px; margin-top: 12px; font-weight: 900; font-size: 0.8rem; cursor: pointer; border-radius: 4px; text-transform: uppercase; transition: 0.3s; }
+        .btn-comprar:hover { background: #D4AF37; }
+
+        /* NAV INFERIOR */
         .bottom-nav {
             position: fixed; bottom: 0; width: 100%; background: var(--bg-deep); display: flex;
             justify-content: space-around; padding: 10px 0 15px; border-top: 1px solid #1a1a1a; z-index: 100;
@@ -96,15 +118,15 @@
         .nav-btn { color: var(--text-muted); text-decoration: none; font-size: 0.65rem; font-weight: 900; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; transition: 0.3s; }
         .nav-btn.active { color: var(--club-gold); transform: translateY(-2px); }
 
-        /* AJUSTES PERFECTOS PARA CELULAR */
+        /* MÓVIL */
         @media (max-width: 768px) {
             .plantilla-container { flex-direction: column; height: auto; }
             .pitch-3d { min-height: 380px; width: 100%; margin-bottom: 20px; }
-            /* Se quita el scroll interno en celular para que ruede toda la página, evitando cortes */
             .player-list { height: auto; max-height: none; width: 100%; overflow-y: visible; padding-right: 0; }
             .team-logo { width: 50px; height: 50px; }
             .team-logo img { width: 30px; height: 30px; }
             .vs { font-size: 1.3rem; }
+            .tienda-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -126,6 +148,8 @@
                     <div class="s-num">#0142</div>
                     <div class="s-status">CUOTA AL DÍA</div>
                 </div>
+
+                <button class="btn-conocenos" onclick="abrirConocenos()">Conoce Nuestra Historia</button>
 
                 <h3 class="section-title">Próximo Encuentro</h3>
                 <div class="match-card">
@@ -179,60 +203,98 @@
             </div>
 
             <div id="tab-tienda" class="tab-content" style="display:none;">
-                <h3 class="section-title">Tienda Oficial</h3>
-                <div style="text-align: center; margin-top: 60px; color: var(--text-muted); background: var(--card-bg); padding: 40px; border-radius: 12px; border: 1px solid #1a1a1a;">
-                    <span style="font-size: 3rem; color: var(--club-gold);">🛍️</span>
-                    <h2 style="margin-top: 15px; font-weight: 900; letter-spacing: 2px; color: white;">PRÓXIMAMENTE</h2>
-                    <p style="font-size: 0.85rem; margin-top: 10px; font-weight: 700; text-transform: uppercase;">Indumentaria y Merchandising Oficial</p>
+                <h3 class="section-title">Tienda Oficial 2026</h3>
+                <div class="tienda-grid">
+                    <div class="producto-card">
+                        <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&q=80&w=400" class="producto-img">
+                        <div class="producto-info">
+                            <div class="producto-titulo">Camiseta Oficial Élite</div>
+                            <div class="producto-precio">$35.00</div>
+                            <button class="btn-comprar" onclick="alert('Redirigiendo a WhatsApp de compras...')">Comprar Ahora</button>
+                        </div>
+                    </div>
+                    <div class="producto-card">
+                        <img src="https://images.unsplash.com/photo-1614632537190-23e4146777db?auto=format&fit=crop&q=80&w=400" class="producto-img">
+                        <div class="producto-info">
+                            <div class="producto-titulo">Balón Pro Match</div>
+                            <div class="producto-precio">$25.00</div>
+                            <button class="btn-comprar" onclick="alert('Redirigiendo a WhatsApp de compras...')">Comprar Ahora</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
     </main>
 
+    <div class="modal-overlay" id="modalConocenos">
+        <div class="modal-content">
+            <button class="btn-cerrar" onclick="cerrarConocenos()">×</button>
+            <h2 class="modal-title">LEGIÓN TÉCNICA</h2>
+            <div class="modal-subtitle">La Orquídea de la Amazonía</div>
+            
+            <div class="modal-h4">NUESTRA MISIÓN</div>
+            <div class="modal-p" id="misionDisplay">Formar atletas integrales con ADN ganador, promoviendo el deporte como motor de cambio social en El Pangui y la provincia de Zamora Chinchipe.</div>
+            
+            <div class="modal-h4">NUESTRA VISIÓN</div>
+            <div class="modal-p" id="visionDisplay">Ser el club referente de la Amazonía ecuatoriana, reconocido por su excelencia táctica, formación de talento y solidez institucional.</div>
+
+            <div class="modal-h4">HISTORIA DEL CLUB</div>
+            <div class="modal-p" id="historiaDisplay">Nacimos con la pasión de nuestra tierra. Representamos a El Pangui con orgullo, llevando los colores dorados como símbolo de la riqueza de nuestra gente y la fuerza de la Amazonía en cada partido que disputamos.</div>
+        </div>
+    </div>
+
     <nav class="bottom-nav">
-        <div class="nav-btn active" onclick="showTab('hoy', this)">
-            <span style="font-size: 1.2rem;">🏠</span>HOY
-        </div>
-        <div class="nav-btn" onclick="showTab('plantilla', this)">
-            <span style="font-size: 1.2rem;">👥</span>PLANTILLA
-        </div>
-        <div class="nav-btn" onclick="showTab('tienda', this)">
-            <span style="font-size: 1.2rem;">🛍️</span>TIENDA
-        </div>
-        <a href="index.html" class="nav-btn">
-            <span style="font-size: 1.2rem;">🚪</span>SALIR
-        </a>
+        <div class="nav-btn active" onclick="showTab('hoy', this)"><span style="font-size: 1.2rem;">🏠</span>HOY</div>
+        <div class="nav-btn" onclick="showTab('plantilla', this)"><span style="font-size: 1.2rem;">👥</span>PLANTILLA</div>
+        <div class="nav-btn" onclick="showTab('tienda', this)"><span style="font-size: 1.2rem;">🛍️</span>TIENDA</div>
+        <a href="index.html" class="nav-btn"><span style="font-size: 1.2rem;">🚪</span>SALIR</a>
     </nav>
 
     <script>
         document.getElementById('userName').textContent = localStorage.getItem('usuarioLegion') || 'Socio';
 
+        // Lógica de Pestañas
         function showTab(tab, element) {
             document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
             document.getElementById('tab-' + tab).style.display = 'block';
             element.classList.add('active');
         }
 
+        // Lógica del Modal Conócenos
+        function abrirConocenos() {
+            const info = JSON.parse(localStorage.getItem('clubInfoLegion'));
+            if(info) {
+                // Solo si el admin guardó datos, los reemplazamos, si no, dejamos los por defecto
+                if(info.mision) document.getElementById('misionDisplay').textContent = info.mision;
+                if(info.vision) document.getElementById('visionDisplay').textContent = info.vision;
+                if(info.historia) document.getElementById('historiaDisplay').textContent = info.historia;
+            }
+            document.getElementById('modalConocenos').style.display = 'block';
+        }
+
+        function cerrarConocenos() {
+            document.getElementById('modalConocenos').style.display = 'none';
+        }
+
+        // Cargar partido
         const data = JSON.parse(localStorage.getItem('proxPartidoLegion'));
         if(data) {
             document.getElementById('rivalName').textContent = data.rival;
             document.getElementById('torneoText').textContent = data.torneo;
-            
             if(data.fecha) {
                 const parts = data.fecha.split('-');
                 const f = new Date(parts[0], parts[1]-1, parts[2]);
                 const fechaFormat = f.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
                 document.getElementById('matchFooter').textContent = `📅 ${fechaFormat.toUpperCase()} - ${data.hora} HRS | 🏟️ ${data.estadio.toUpperCase()}`;
             }
-
             if(data.logoRival) {
                 document.getElementById('rivalLogo').innerHTML = `<img src="${data.logoRival}">`;
             }
         }
 
+        // Generar Lista de Jugadores
         const jugadores = [
             {n:1, name:"LITUMA LUIS", p:"Portero"}, {n:2, name:"GUARTAZACA MICHAEL", p:"Lat. Izquierdo"},
             {n:3, name:"GALLO BRANDON", p:"Ext. Derecho"}, {n:4, name:"PESANTEZ ANGEL", p:"Lat. Derecho"},
