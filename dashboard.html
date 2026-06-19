@@ -10,11 +10,23 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Urbanist', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-deep); color: white; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-        /* HEADER */
-        .top-bar { background: var(--card-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; z-index: 10; }
+        /* HEADER & MENÚ DE USUARIO */
+        .top-bar { background: var(--card-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; z-index: 50; position: relative; }
         .top-bar img { height: 35px; }
-        .user-info { display: flex; align-items: center; gap: 10px; color: var(--club-gold); font-weight: 900; text-transform: uppercase; font-size: 0.8rem; }
-        .avatar { width: 32px; height: 32px; border: 1px solid var(--club-gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+        
+        .user-info { display: flex; align-items: center; gap: 10px; color: var(--club-gold); font-weight: 900; text-transform: uppercase; font-size: 0.8rem; cursor: pointer; }
+        .avatar { width: 35px; height: 35px; border: 2px solid var(--club-gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; overflow: hidden; background: #222; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* DROPDOWN MENU */
+        .user-dropdown { position: absolute; top: 65px; right: 20px; background: #111; border: 1px solid #222; border-radius: 8px; width: 220px; display: none; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.8); overflow: hidden; z-index: 100; animation: slideDown 0.2s ease-out; }
+        .user-dropdown.show { display: flex; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .dropdown-header { padding: 15px; background: #0a0a0a; border-bottom: 1px solid #222; font-size: 0.7rem; color: var(--text-muted); font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+        .dropdown-item { padding: 15px; color: white; text-decoration: none; font-size: 0.85rem; font-weight: 700; border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+        .dropdown-item:hover { background: #1a1a1a; color: var(--club-gold); }
+        .dropdown-item:last-child { border-bottom: none; color: #ff4444; }
 
         /* CONTENEDOR PRINCIPAL */
         .main-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 130px; }
@@ -28,10 +40,6 @@
         .s-type { color: var(--club-gold); font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
         .s-num { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; letter-spacing: 2px; }
         .s-status { display: inline-block; background: rgba(42, 128, 58, 0.2); color: #4caf50; font-size: 0.75rem; padding: 5px 12px; border-radius: 4px; font-weight: 900; border: 1px solid #4caf50; text-transform: uppercase; }
-
-        /* BOTÓN CONÓCENOS */
-        .btn-conocenos { width: 100%; padding: 15px; background: transparent; border: 1px solid var(--club-gold); color: var(--club-gold); font-weight: 900; border-radius: 8px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; margin-bottom: 30px; }
-        .btn-conocenos:hover { background: rgba(197, 160, 89, 0.1); }
 
         /* MODAL CONÓCENOS */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; padding: 30px; overflow-y: auto; }
@@ -55,7 +63,6 @@
         .news-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; }
         .news-scroll::-webkit-scrollbar { display: none; }
         .news-card { min-width: 280px; max-width: 320px; background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid #1a1a1a; }
-        
         .gallery-container { position: relative; width: 100%; height: 180px; overflow: hidden; background: #222; }
         .gallery-slide { display: none; width: 100%; height: 100%; background-position: center; background-size: cover; }
         .gallery-slide.active { display: block; animation: fade 0.5s; }
@@ -64,7 +71,6 @@
         .gal-prev { left: 5px; }
         .gal-next { right: 5px; }
         @keyframes fade { from {opacity: 0.5} to {opacity: 1} }
-
         .news-content { padding: 15px; }
         .news-title { font-size: 1rem; font-weight: 900; margin-bottom: 8px; line-height: 1.3; color: white; text-transform: uppercase;}
         .news-desc { font-size: 0.8rem; color: #ccc; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
@@ -82,7 +88,7 @@
         .player-list::-webkit-scrollbar { width: 6px; }
         .player-list::-webkit-scrollbar-thumb { background: var(--club-gold); border-radius: 10px;}
         .player-list::-webkit-scrollbar-track { background: #111; border-radius: 10px; }
-        .p-item { background: var(--card-bg); border: 1px solid #1a1a1a; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+        .p-item { background: var(--card-bg); border: 1px solid #1a1a1a; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; transition: 0.2s; }
         .p-number { color: var(--club-gold); font-weight: 900; font-size: 1.4rem; width: 30px; text-align: center; }
         .p-data h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
         .p-data p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
@@ -95,7 +101,6 @@
         .producto-titulo { font-weight: 900; font-size: 0.85rem; margin-bottom: 5px; text-transform: uppercase; }
         .producto-precio { color: var(--club-gold); font-weight: 900; font-size: 1.1rem; }
         .btn-comprar { width: 100%; background: var(--club-gold); color: black; border: none; padding: 10px; margin-top: 12px; font-weight: 900; font-size: 0.8rem; cursor: pointer; border-radius: 4px; text-transform: uppercase; transition: 0.3s; }
-        .btn-comprar:hover { background: #D4AF37; }
 
         /* NAV INFERIOR */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--bg-deep); display: flex; justify-content: space-around; padding: 10px 0 15px; border-top: 1px solid #1a1a1a; z-index: 100; }
@@ -115,11 +120,19 @@
     </style>
 </head>
 <body>
+    
     <header class="top-bar">
         <img src="./escudolegion.png" alt="Legión">
-        <div class="user-info">
+        <div class="user-info" onclick="toggleMenu(event)">
             <span id="userName">Socio</span>
-            <div class="avatar">👤</div>
+            <div class="avatar" id="userAvatar">👤</div>
+        </div>
+
+        <div class="user-dropdown" id="menuUsuario">
+            <div class="dropdown-header">AJUSTES DE CUENTA</div>
+            <a href="#" class="dropdown-item" onclick="alert('Módulo de edición de perfil en desarrollo')"><span>⚙️</span> Mi Perfil</a>
+            <a href="#" class="dropdown-item" onclick="abrirConocenos()"><span>🏛️</span> Historia del Club</a>
+            <a href="index.html" class="dropdown-item"><span>🚪</span> Cerrar Sesión</a>
         </div>
     </header>
 
@@ -128,12 +141,10 @@
             
             <div id="tab-hoy" class="tab-content active">
                 <div class="socio-card">
-                    <div class="s-type">MIEMBRO OFICIAL</div>
+                    <div class="s-type" id="carnetTipo">MIEMBRO OFICIAL</div>
                     <div class="s-num">#0142</div>
                     <div class="s-status">CUOTA AL DÍA</div>
                 </div>
-
-                <button class="btn-conocenos" onclick="abrirConocenos()">Conoce Nuestra Historia</button>
 
                 <h3 class="section-title">Próximo Encuentro</h3>
                 <div class="match-card">
@@ -154,7 +165,7 @@
                         </div>
                         <div class="news-content">
                             <div class="news-title">Presentamos la nueva indumentaria dorada 2026</div>
-                            <div class="news-desc">Una armadura digna de la Legión, con la última tecnología en absorción de sudor para nuestros jugadores.</div>
+                            <div class="news-desc">Una armadura digna de la Legión, con la última tecnología.</div>
                             <div class="news-date">HACE 2 HORAS</div>
                         </div>
                     </div>
@@ -214,13 +225,13 @@
             <div class="modal-subtitle">La Orquídea de la Amazonía</div>
             
             <div class="modal-h4">NUESTRA MISIÓN</div>
-            <div class="modal-p" id="misionDisplay">Formar atletas integrales con ADN ganador, promoviendo el deporte como motor de cambio social en El Pangui y la provincia de Zamora Chinchipe.</div>
+            <div class="modal-p" id="misionDisplay">Formar atletas integrales con ADN ganador en El Pangui.</div>
             
             <div class="modal-h4">NUESTRA VISIÓN</div>
-            <div class="modal-p" id="visionDisplay">Ser el club referente de la Amazonía ecuatoriana, reconocido por su excelencia táctica, formación de talento y solidez institucional.</div>
+            <div class="modal-p" id="visionDisplay">Ser el club referente de la Amazonía ecuatoriana.</div>
 
             <div class="modal-h4">HISTORIA DEL CLUB</div>
-            <div class="modal-p" id="historiaDisplay">Nacimos con la pasión de nuestra tierra. Representamos a El Pangui con orgullo, llevando los colores dorados como símbolo de la riqueza de nuestra gente.</div>
+            <div class="modal-p" id="historiaDisplay">Nacimos con la pasión de nuestra tierra y los colores dorados.</div>
         </div>
     </div>
 
@@ -228,12 +239,43 @@
         <div class="nav-btn active" onclick="showTab('hoy', this)"><span style="font-size: 1.2rem;">🏠</span>HOY</div>
         <div class="nav-btn" onclick="showTab('plantilla', this)"><span style="font-size: 1.2rem;">👥</span>PLANTILLA</div>
         <div class="nav-btn" onclick="showTab('tienda', this)"><span style="font-size: 1.2rem;">🛍️</span>TIENDA</div>
-        <a href="index.html" class="nav-btn"><span style="font-size: 1.2rem;">🚪</span>SALIR</a>
     </nav>
 
     <script>
-        document.getElementById('userName').textContent = localStorage.getItem('usuarioLegion') || 'Socio';
+        // Cargar Datos del Usuario (Nombre y Foto)
+        const usuarioDataGuardado = JSON.parse(localStorage.getItem('usuarioLegionData'));
+        const nombreSimple = localStorage.getItem('usuarioLegion') || 'Socio';
+        
+        if (usuarioDataGuardado) {
+            document.getElementById('userName').textContent = usuarioDataGuardado.nombre.split(' ')[0]; // Solo primer nombre
+            document.getElementById('carnetTipo').textContent = usuarioDataGuardado.tipo.toUpperCase();
+            
+            if(usuarioDataGuardado.foto) {
+                document.getElementById('userAvatar').innerHTML = `<img src="${usuarioDataGuardado.foto}">`;
+            }
+        } else {
+            document.getElementById('userName').textContent = nombreSimple;
+        }
 
+        // Lógica del Menú Desplegable (Dropdown)
+        function toggleMenu(event) {
+            event.stopPropagation();
+            document.getElementById('menuUsuario').classList.toggle('show');
+        }
+
+        // Cerrar menú si haces clic en cualquier otra parte
+        window.onclick = function(event) {
+            if (!event.target.closest('.user-info')) {
+                const dropdowns = document.getElementsByClassName("user-dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    if (dropdowns[i].classList.contains('show')) {
+                        dropdowns[i].classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        // Lógica de Pestañas
         function showTab(tab, element) {
             document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -243,6 +285,7 @@
 
         // Conócenos
         function abrirConocenos() {
+            document.getElementById('menuUsuario').classList.remove('show'); // Cierra el menú al abrir
             const info = JSON.parse(localStorage.getItem('clubInfoLegion'));
             if(info) {
                 if(info.mision) document.getElementById('misionDisplay').textContent = info.mision;
@@ -275,7 +318,6 @@
                 slidesHTML += `<div class="gallery-slide ${index === 0 ? 'active' : ''}" style="background-image: url('${img}');"></div>`;
             });
             
-            // Poner botones solo si hay más de 1 foto
             let controlesHTML = noticiaGuardada.imagenes.length > 1 ? `
                 <button class="gal-btn gal-prev" onclick="cambiarSlide(-1, event)">&#10094;</button>
                 <button class="gal-btn gal-next" onclick="cambiarSlide(1, event)">&#10095;</button>
@@ -295,14 +337,12 @@
                 </div>
             `;
             
-            // Inyectar al principio del contenedor
             const contenedor = document.getElementById('contenedorNoticias');
             contenedor.innerHTML = tarjetaNueva + contenedor.innerHTML;
         }
 
-        // Función global para mover las fotos
         window.cambiarSlide = function(direccion, event) {
-            event.stopPropagation(); // Evita clics raros
+            event.stopPropagation();
             const contenedorGaleria = event.target.closest('.gallery-container');
             const slides = contenedorGaleria.querySelectorAll('.gallery-slide');
             let indiceActivo = 0;
@@ -313,8 +353,8 @@
             });
             
             indiceActivo += direccion;
-            if(indiceActivo >= slides.length) indiceActivo = 0; // Vuelve a la primera
-            if(indiceActivo < 0) indiceActivo = slides.length - 1; // Va a la última
+            if(indiceActivo >= slides.length) indiceActivo = 0;
+            if(indiceActivo < 0) indiceActivo = slides.length - 1;
             
             slides[indiceActivo].classList.add('active');
         };
